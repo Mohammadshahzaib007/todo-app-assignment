@@ -15,7 +15,7 @@ function AllTasks() {
   return (
     <section className={classes.mainContainer}>
       <Container>
-        <TodoCard todoTitle="Complete this as soon as posible" todoDescription="description...." />
+        <TodoCard todoTitle="Complete this as soon as posible" todoDescription="description...." eta="25/03/2021"/>
       </Container>
     </section>
   );
