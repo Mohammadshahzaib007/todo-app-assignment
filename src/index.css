@@ -10,6 +10,7 @@ body {
   height: 100%;
 }
 
+/* react router active link class */
 .active {
   background-color: #fff5f8 !important;
 }

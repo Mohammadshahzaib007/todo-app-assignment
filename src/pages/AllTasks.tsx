@@ -1,11 +1,21 @@
-import { Container } from "@material-ui/core";
+import { Container, makeStyles } from "@material-ui/core";
 import React from "react";
+import TodoCard from "../components/UI/TodoCard";
+
+const useStyles = makeStyles({
+  mainContainer: {
+    width: "100%",
+    minHeight: "calc(85vh - 15.625rem)",
+  },
+});
 
 function AllTasks() {
+  const classes = useStyles();
+
   return (
-    <section>
+    <section className={classes.mainContainer}>
       <Container>
-        <h1>I am all Tasks</h1>
+        <TodoCard />
       </Container>
     </section>
   );
