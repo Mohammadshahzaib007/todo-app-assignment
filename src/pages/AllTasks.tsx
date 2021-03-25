@@ -1,6 +1,6 @@
 import React, { Dispatch } from "react";
 import { Container, makeStyles, Grid } from "@material-ui/core";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
@@ -30,6 +30,7 @@ function AllTasks() {
   const todoLists = () => {
     return todos.map((todo: TodoState) => (
       <TodoCard
+        priority={todo.priority}
         onDeleteTodo={removeTodoHandler}
         id={todo.id}
         key={todo.id}

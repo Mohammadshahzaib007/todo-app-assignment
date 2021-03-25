@@ -10,6 +10,20 @@ import { useDispatch } from "react-redux";
 import { ADD_TODO } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { v4 as uuidv4 } from "uuid";
+import {
+  FormControl,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
+
+//-----------------------------------------Material UI------------------------------------//
+const useStyles = makeStyles({
+  input: {
+    marginBottom: "20px",
+  },
+});
 
 //-----------------------------------------props types------------------------------------//
 type Props = {
@@ -17,14 +31,15 @@ type Props = {
   open: boolean;
 };
 
-//-----------------------------------------state types------------------------------------//
+//-----------------------------------------state types for local------------------------------------//
 interface State {
   title: string;
   description: string;
   eta: string;
+  priority: string;
 }
 
-//-----------------------------------------action types------------------------------------//
+//-----------------------------------------action types for local------------------------------------//
 interface AddTodoAction {
   type: string;
   payload: string;
@@ -35,10 +50,11 @@ const initialState: State = {
   title: "",
   description: "",
   eta: "",
+  priority: "",
 };
 
 //-----------------------------------------reducer function------------------------------------//
-function reducer(state: State, action: AddTodoAction) {
+const reducer = (state: State, action: AddTodoAction): State => {
   switch (action.type) {
     case "SET_TITLE":
       return {
@@ -56,22 +72,31 @@ function reducer(state: State, action: AddTodoAction) {
         ...state,
         eta: action.payload,
       };
+    case "SET_PRIORITY":
+      return {
+        ...state,
+        priority: action.payload,
+      };
 
     case "CLEAR_FIELDS":
       return {
         title: action.payload,
         description: action.payload,
         eta: action.payload,
+        priority: action.payload,
       };
     default:
       return state;
   }
-}
+};
 
 //-----------------------------------------component------------------------------------//
 export default function AddTodoModal(props: Props) {
   //-----------------------------------------props destructuring------------------------------------//
   const { handleClose, open } = props;
+
+  //-----------------------------------------classes for style------------------------------------//
+  const classes = useStyles();
 
   //-----------------------------------------local state and its dispatch------------------------------------//
   const [state, localDispatch] = useReducer(reducer, initialState);
@@ -92,9 +117,10 @@ export default function AddTodoModal(props: Props) {
         title: state.title,
         description: state.description,
         eta: state.eta,
+        priority: state.priority,
       },
     });
-    localDispatch({ type: "CLEAR_FIELDS", payload: '' });
+    localDispatch({ type: "CLEAR_FIELDS", payload: "" });
   };
 
   return (
@@ -112,6 +138,7 @@ export default function AddTodoModal(props: Props) {
           </DialogContentText>
           <TextField
             autoFocus
+            className={classes.input}
             margin="dense"
             id="title"
             label="Title"
@@ -125,6 +152,7 @@ export default function AddTodoModal(props: Props) {
           />
           <TextField
             autoFocus
+            className={classes.input}
             margin="dense"
             label="Description"
             type="textarea"
@@ -140,6 +168,7 @@ export default function AddTodoModal(props: Props) {
           />
           <TextField
             autoFocus
+            className={classes.input}
             margin="dense"
             InputLabelProps={{
               shrink: true,
@@ -153,6 +182,23 @@ export default function AddTodoModal(props: Props) {
               localDispatch({ type: "SET_ETA", payload: e.target.value })
             }
           />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Priority</InputLabel>
+            <Select
+              fullWidth
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={state.priority}
+              onChange={(e) =>
+                // @ts-ignore
+                localDispatch({ type: "SET_PRIORITY", payload: e.target.value })
+              }
+            >
+              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="low">Low</MenuItem>
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">

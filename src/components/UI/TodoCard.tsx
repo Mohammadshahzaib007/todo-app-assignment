@@ -8,12 +8,13 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles({
   root: {
     width: 300,
     minHeight: 300,
-    borderTop: "3px solid #C51162",
+    // borderTop: "3px solid #C51162",
     display: "flex",
     flexDirection: "column",
     margin: "10px",
@@ -39,51 +40,74 @@ type Props = {
   todoTitle: string;
   todoDescription: string;
   eta: string;
-  onDeleteTodo: (id:string) => void;
-  id: string
+  onDeleteTodo: (id: string) => void;
+  id: string;
+  priority: string;
 };
 
 export default function TodoCard(props: Props) {
   const classes = useStyles();
 
-  const { todoTitle, todoDescription, eta, onDeleteTodo, id } = props;
+  const { todoTitle, todoDescription, eta, onDeleteTodo, id, priority } = props;
+
+  let borderColor = "";
+
+  if (priority === "high") {
+    borderColor = "red";
+  }
+  if (priority === "medium") borderColor = "#FF8C00";
+  if (priority === "low") borderColor = "yellow";
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <div className={classes.chip}>
-          <Typography variant="h6" style={{ fontSize: "1.125rem" }}>
-            {todoTitle}
-          </Typography>
-        </div>
+    <div id="card">
+      <Badge
+        badgeContent={priority.slice(0, 1).toLocaleUpperCase()}
+        color="secondary"
+      >
+        <Card
+          className={classes.root}
+          style={{ borderTop: `3px solid ${borderColor}` }}
+        >
+          <CardContent>
+            <div className={classes.chip}>
+              <Typography variant="h6" style={{ fontSize: "1.125rem" }}>
+                {todoTitle}
+              </Typography>
+            </div>
 
-        <Typography variant="body2" component="p" style={{ marginTop: "30px" }}>
-          {todoDescription}
-        </Typography>
-      </CardContent>
-      <CardActions className={classes.cardActionContainer}>
-        <Typography style={{ fontSize: "0.75rem" }}>ETA: {eta}</Typography>
+            <Typography
+              variant="body2"
+              component="p"
+              style={{ marginTop: "30px" }}
+            >
+              {todoDescription}
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.cardActionContainer}>
+            <Typography style={{ fontSize: "0.75rem" }}>ETA: {eta}</Typography>
 
-        <div>
-          <Tooltip title="Mark as completed">
-            <IconButton color="secondary">
-              <DoneIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+            <div>
+              <Tooltip title="Mark as completed">
+                <IconButton color="secondary">
+                  <DoneIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
 
-          <Tooltip title="Edit Todo">
-            <IconButton color="secondary">
-              <EditIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+              <Tooltip title="Edit Todo">
+                <IconButton color="secondary">
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
 
-          <Tooltip title="Delete todo">
-            <IconButton color="secondary" onClick={() => onDeleteTodo(id)}>
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </div>
-      </CardActions>
-    </Card>
+              <Tooltip title="Delete todo">
+                <IconButton color="secondary" onClick={() => onDeleteTodo(id)}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </div>
+          </CardActions>
+        </Card>
+      </Badge>
+    </div>
   );
 }

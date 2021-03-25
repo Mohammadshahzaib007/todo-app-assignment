@@ -14,3 +14,10 @@ body {
 .active {
   background-color: #fff5f8 !important;
 }
+
+/* for badge */
+
+#card  .MuiBadge-anchorOriginTopRightRectangle {
+  top: 10px;
+  right: 10px;
+}
