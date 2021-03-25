@@ -4,7 +4,9 @@ export interface TodosState {
 
 // a single todo
 export interface TodoState {
+    id: string,
     title: string,
     description: string,
-    eta: string
+    eta: string,
+
 }
