@@ -1,6 +1,8 @@
-import { Container, makeStyles } from "@material-ui/core";
 import React from "react";
+import { Container, makeStyles, Grid } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import TodoCard from "../components/UI/TodoCard";
+import { AppState } from "../store";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -12,10 +14,25 @@ const useStyles = makeStyles({
 function AllTasks() {
   const classes = useStyles();
 
+  //-----------------------------------------Redux state with useSlector hook------------------------------//
+  //-----------------------------------------All Todos------------------------------//
+  const todos = useSelector((state: AppState) => state.todo.todos);
+
+  const todoLists = () => {
+    return todos.map((todo) => (
+      <TodoCard
+        key={todo.id}
+        todoTitle={todo.title}
+        todoDescription={todo.description}
+        eta={todo.eta}
+      />
+    ));
+  };
+
   return (
     <section className={classes.mainContainer}>
       <Container>
-        <TodoCard todoTitle="Complete this as soon as posible" todoDescription="description...." eta="25/03/2021"/>
+        <Grid container wrap="wrap"> {todoLists()} </Grid>
       </Container>
     </section>
   );

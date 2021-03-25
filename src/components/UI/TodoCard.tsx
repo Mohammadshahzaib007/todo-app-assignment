@@ -16,6 +16,7 @@ const useStyles = makeStyles({
     borderTop: "3px solid #C51162",
     display: "flex",
     flexDirection: "column",
+    margin: '10px'
   },
 
   chip: {
