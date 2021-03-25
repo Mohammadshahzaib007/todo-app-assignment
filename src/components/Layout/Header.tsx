@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { NavLink } from "react-router-dom";
+import AddTodoModal from "../../containers/AddTodoModal";
 
 const useStyles = makeStyles({
   header: {
@@ -26,6 +27,16 @@ const useStyles = makeStyles({
 
 function Header() {
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   // this data for looping
   const NavLinks: Array<{ name: string; link: string }> = [
@@ -56,6 +67,7 @@ function Header() {
               color="secondary"
               className={classes.button}
               startIcon={<AddIcon />}
+              onClick={handleClickOpen}
             >
               Add
             </Button>
@@ -80,6 +92,7 @@ function Header() {
             ))}
           </Grid>
         </Container>
+        <AddTodoModal handleClose={handleClose} open={open} />
       </section>
     </>
   );

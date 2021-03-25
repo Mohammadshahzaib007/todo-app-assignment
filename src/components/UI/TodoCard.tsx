@@ -3,24 +3,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { IconButton, Tooltip } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import DoneIcon from "@material-ui/icons/Done";
 
 const useStyles = makeStyles({
   root: {
     width: 275,
     minHeight: 275,
     borderTop: "3px solid #C51162",
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
+    display: "flex",
+    flexDirection: "column",
   },
 
   chip: {
@@ -28,30 +23,55 @@ const useStyles = makeStyles({
     padding: "3px 15px",
     color: "#C51162",
     backgroundColor: "rgba(197, 17, 98, 0.1)",
-
+   
     borderRadius: "5px",
   },
   cardActionContainer: {
     marginTop: "auto",
+    display: "flex",
+    justifyContent: "flex-end",
   },
 });
 
-export default function TodoCard() {
+type Props = {
+  todoTitle: string;
+  todoDescription: string;
+};
+
+export default function TodoCard(props: Props) {
   const classes = useStyles();
+
+  const { todoTitle, todoDescription } = props;
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <div className={classes.chip}>
-          <Typography>complete your assignment</Typography>
+          <Typography variant="h6" style={{fontSize: '1.125rem'}}>{todoTitle}</Typography>
         </div>
 
         <Typography variant="body2" component="p" style={{ marginTop: "30px" }}>
-          description...
+          {todoDescription}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActionContainer}>
-        <Button size="small">Learn More</Button>
+        <Tooltip title="Mark as completed">
+          <IconButton color="secondary">
+            <DoneIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Edit Todo">
+          <IconButton color="secondary">
+            <EditIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Delete todo">
+          <IconButton color="secondary">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </CardActions>
     </Card>
   );
