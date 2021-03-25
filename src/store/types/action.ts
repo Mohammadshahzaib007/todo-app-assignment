@@ -7,7 +7,8 @@ export interface AddTodo {
 }
 
 export interface RemoveTodo {
-    type: typeof REMOVE_TODO
+    type: typeof REMOVE_TODO,
+    id: string,
 }
 
 export type TodoActionTypes = AddTodo | RemoveTodo;

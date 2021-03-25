@@ -1,8 +1,10 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 
 import thunk, { ThunkMiddleware } from 'redux-thunk';
-import todoReducer from './reducers/todoReducer'
+import todoReducer from './reducers/todo'
 import { AppActionTypes } from "./types/action";
+
+
 
 /*
 THIS SOLUTION HAS BEEN TAKEN FORM THE STACKOVERFLOW

@@ -58,7 +58,11 @@ function reducer(state: State, action: AddTodoAction) {
       };
 
     case "CLEAR_FIELDS":
-      return state;
+      return {
+        title: action.payload,
+        description: action.payload,
+        eta: action.payload,
+      };
     default:
       return state;
   }
@@ -90,7 +94,7 @@ export default function AddTodoModal(props: Props) {
         eta: state.eta,
       },
     });
-    // localDispatch({ type: "CLEAR_FIELDS" });
+    localDispatch({ type: "CLEAR_FIELDS", payload: '' });
   };
 
   return (

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     borderTop: "3px solid #C51162",
     display: "flex",
     flexDirection: "column",
-    margin: '10px'
+    margin: "10px",
   },
 
   chip: {
@@ -31,20 +31,22 @@ const useStyles = makeStyles({
     marginTop: "auto",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: 'center'
+    alignItems: "center",
   },
 });
 
 type Props = {
   todoTitle: string;
   todoDescription: string;
-  eta: string
+  eta: string;
+  onDeleteTodo: (id:string) => void;
+  id: string
 };
 
 export default function TodoCard(props: Props) {
   const classes = useStyles();
 
-  const { todoTitle, todoDescription, eta } = props;
+  const { todoTitle, todoDescription, eta, onDeleteTodo, id } = props;
 
   return (
     <Card className={classes.root}>
@@ -60,7 +62,7 @@ export default function TodoCard(props: Props) {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActionContainer}>
-        <Typography style={{fontSize: '0.75rem'}}>ETA: {eta}</Typography>
+        <Typography style={{ fontSize: "0.75rem" }}>ETA: {eta}</Typography>
 
         <div>
           <Tooltip title="Mark as completed">
@@ -76,7 +78,7 @@ export default function TodoCard(props: Props) {
           </Tooltip>
 
           <Tooltip title="Delete todo">
-            <IconButton color="secondary">
+            <IconButton color="secondary" onClick={() => onDeleteTodo(id)}>
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
