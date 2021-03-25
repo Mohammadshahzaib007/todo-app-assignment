@@ -9,7 +9,7 @@ function App() {
   return (
     <Layout>
       <Switch>
-        <Route  path="/" component={AllTasks} />
+        <Route exact path="/" component={AllTasks} />
         <Route path="/pending-tasks" component={PendingTasks} />
         <Route path="/completed-tasks" component={CompletedTasks} />
       </Switch>

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   header: {
     width: "100%",
     height: "15.625rem",
-    background: "#d4f1f9",
+    background: "#f9eef6",
   },
   button: {
     marginTop: "10px",
