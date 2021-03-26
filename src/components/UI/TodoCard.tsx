@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -48,7 +48,7 @@ type Props = {
   deleteConfirmationHandler: (id: string) => void;
   markAsCompleted: (id: string) => void;
   isCompleted: boolean;
-  onEditTodo: () => void;
+  onEditTodo: (id:string) => void;
 };
 
 export default function TodoCard(props: Props) {
@@ -81,7 +81,7 @@ export default function TodoCard(props: Props) {
   };
 
   const onEdit = () => {
-    onEditTodo();
+    onEditTodo(todoId);
   };
 
   return (

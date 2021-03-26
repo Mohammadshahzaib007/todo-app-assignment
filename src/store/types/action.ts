@@ -1,4 +1,4 @@
-import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO, CLOSE_ADD_TODO_MODAL } from "../actions/actionTypes";
+import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO, CLOSE_ADD_TODO_MODAL, EDIT_TODO } from "../actions/actionTypes";
 import { SnackbarState, TodoState } from "./stateTypes";
 
 //-----------------------------------------todo action types------------------------------------//
@@ -17,7 +17,12 @@ export interface MarkAsCompleted {
     id: string,
 }
 
-export type TodoActionTypes = AddTodo | RemoveTodo | MarkAsCompleted;
+export interface EditTodo {
+    type: typeof EDIT_TODO,
+    id: string
+}
+
+export type TodoActionTypes = AddTodo | RemoveTodo | MarkAsCompleted | EditTodo;
 
 //-----------------------------------------snackbar action types------------------------------------//
 export interface OpenSnackbar {

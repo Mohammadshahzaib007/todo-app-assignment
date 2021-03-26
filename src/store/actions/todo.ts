@@ -1,6 +1,6 @@
 import { AppActionTypes } from "../types/action"
 import { TodoState } from "../types/stateTypes"
-import { ADD_TODO, MARK_AS_COMPLETED, REMOVE_TODO } from "./actionTypes"
+import { ADD_TODO, EDIT_TODO, MARK_AS_COMPLETED, REMOVE_TODO } from "./actionTypes"
 
 export const addTodo = (payload: TodoState): AppActionTypes => {
     return {
@@ -16,9 +16,16 @@ export const removeTod = (id: string): AppActionTypes => {
     }
 }
 
-export const MarkAsCompleted = (id: string): AppActionTypes => {
+export const markAsCompleted = (id: string): AppActionTypes => {
     return {
         type: MARK_AS_COMPLETED,
+        id: id
+    }
+}
+
+export const editTodo = (id:string):AppActionTypes => {
+    return {
+        type: EDIT_TODO,
         id: id
     }
 }

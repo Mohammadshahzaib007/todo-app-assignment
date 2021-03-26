@@ -27,6 +27,8 @@ const rootReducer = combineReducers({
     addTodoModal: addTodoModalReducer
 })
 
+console.log(todoReducer)
+
 export type AppState = ReturnType<typeof rootReducer>
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<AppState, AppActionTypes>)))

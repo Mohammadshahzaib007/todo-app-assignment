@@ -98,15 +98,13 @@ export default function AddTodoModal(props: Props) {
   //-----------------------------------------classes for style------------------------------------//
   const classes = useStyles();
 
-
   //-----------------------------------------local state and its dispatch------------------------------------//
   const [state, localDispatch] = useReducer(reducer, initialState);
 
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
-
-   //-----------------------------------------Redux state with useSlector hook------------------------------//
+  //-----------------------------------------Redux state with useSlector hook------------------------------//
   //-----------------------------------------modal open state------------------------------//
   const open = useSelector((state: AppState) => state.addTodoModal.open);
 

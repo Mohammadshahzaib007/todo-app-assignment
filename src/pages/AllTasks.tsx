@@ -6,6 +6,7 @@ import { AppState } from "../store";
 import { TodoState } from "../store/types/stateTypes";
 import Nodata from "../components/UI/Nodata";
 import {
+  EDIT_TODO,
   MARK_AS_COMPLETED,
   OPEN_ADD_TODO_MODAL,
   OPEN_SNACKBAR,
@@ -64,6 +65,7 @@ function AllTasks() {
   //-----------------------------------------edit todo------------------------------//
   const editTodo = (id: string) => {
     dispatch({ type: OPEN_ADD_TODO_MODAL });
+    dispatch({type: EDIT_TODO, id: id})
   };
 
   const todoLists = () => {
@@ -80,7 +82,7 @@ function AllTasks() {
         deleteConfirmationHandler={deleteConfirmationHandler}
         markAsCompleted={(id) => markAsCompleted(id)}
         isCompleted={todo.isCompleted}
-        onEditTodo={() => editTodo(todo.id)}
+        onEditTodo={editTodo}
       />
     ));
   };

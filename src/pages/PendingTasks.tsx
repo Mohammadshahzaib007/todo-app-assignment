@@ -5,7 +5,11 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
-import { OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
+import {
+  OPEN_ADD_TODO_MODAL,
+  OPEN_SNACKBAR,
+  REMOVE_TODO,
+} from "../store/actions/actionTypes";
 import { TodoState } from "../store/types/stateTypes";
 import TodoCard from "../components/UI/TodoCard";
 
@@ -59,7 +63,6 @@ function PendingTasks() {
   //-----------------------------------------edit todo------------------------------//
   const editTodo = (id: string) => {
     dispatch({ type: OPEN_ADD_TODO_MODAL });
-    console.log('onEdit', id)
   };
 
   const todoLists = () => {
@@ -77,7 +80,7 @@ function PendingTasks() {
         // for get rid of the error
         markAsCompleted={() => {}}
         isCompleted={todo.isCompleted}
-        onEditTodo={() => editTodo(todo.id)}
+        onEditTodo={editTodo}
       />
     ));
   };

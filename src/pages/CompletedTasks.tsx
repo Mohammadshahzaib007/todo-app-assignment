@@ -61,7 +61,7 @@ function CompletedTasks() {
   const todoLists = () => {
     return completedTodos.map((todo: TodoState) => (
       <TodoCard
-        onEditTodo={() => editTodo(todo.id)}
+        onEditTodo={editTodo}
         priority={todo.priority}
         openCloseDeleteModal={openCloseDeleteModalHandler}
         todoId={todo.id}
