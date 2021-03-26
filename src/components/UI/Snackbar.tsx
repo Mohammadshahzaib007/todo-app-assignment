@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import { Snackbar as SnackbarMui } from "@material-ui/core/";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -45,7 +44,7 @@ export default function Snackbar() {
     <div className={classes.root}>
       <SnackbarMui
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",

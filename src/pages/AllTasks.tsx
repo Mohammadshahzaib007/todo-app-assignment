@@ -23,6 +23,7 @@ function AllTasks() {
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
+  // for deleting selected todo 
   const removeTodoHandler = (id: string) => {
     dispatch({ type: REMOVE_TODO, id: id });
   };

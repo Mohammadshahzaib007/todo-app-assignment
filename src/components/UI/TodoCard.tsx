@@ -9,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import Badge from "@material-ui/core/Badge";
+import DeleteModal from "./DeleteModal";
 
 const useStyles = makeStyles({
   root: {
@@ -108,6 +109,7 @@ export default function TodoCard(props: Props) {
           </CardActions>
         </Card>
       </Badge>
+      <DeleteModal />
     </div>
   );
 }
