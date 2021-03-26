@@ -41,15 +41,17 @@ type Props = {
   todoTitle: string;
   todoDescription: string;
   eta: string;
-  onDeleteTodo: (id: string) => void;
+  openCloseDeleteModal: () => void;
   id: string;
   priority: string;
+  isDeleteModalOpen: boolean,
+ 
 };
 
 export default function TodoCard(props: Props) {
   const classes = useStyles();
 
-  const { todoTitle, todoDescription, eta, onDeleteTodo, id, priority } = props;
+  const { todoTitle, todoDescription, eta, openCloseDeleteModal,  id, priority, isDeleteModalOpen } = props;
 
   let borderColor = "";
 
@@ -101,7 +103,7 @@ export default function TodoCard(props: Props) {
               </Tooltip>
 
               <Tooltip title="Delete todo">
-                <IconButton color="secondary" onClick={() => onDeleteTodo(id)}>
+                <IconButton color="secondary" onClick={ openCloseDeleteModal}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -109,7 +111,7 @@ export default function TodoCard(props: Props) {
           </CardActions>
         </Card>
       </Badge>
-      <DeleteModal />
+      <DeleteModal isDeleteModalOpen={isDeleteModalOpen} openCloseDeleteModal={openCloseDeleteModal} todoId={id}/>
     </div>
   );
 }

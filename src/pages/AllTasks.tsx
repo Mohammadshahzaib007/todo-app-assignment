@@ -1,10 +1,8 @@
-import React, { Dispatch } from "react";
+import React, { useState } from "react";
 import { Container, makeStyles, Grid } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
-import { AppActionTypes } from "../store/types/action";
-import { REMOVE_TODO } from "../store/actions/actionTypes";
 import { TodoState } from "../store/types/stateTypes";
 import Nodata from "../components/UI/Nodata";
 // react flip move is for animation
@@ -14,18 +12,19 @@ const useStyles = makeStyles({
   mainContainer: {
     width: "100%",
     height: "calc(85vh - 15.625rem)",
-    overflow: 'auto'
+    overflow: "auto",
   },
 });
 
 function AllTasks() {
   const classes = useStyles();
-  //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
-  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
-  // for deleting selected todo 
-  const removeTodoHandler = (id: string) => {
-    dispatch({ type: REMOVE_TODO, id: id });
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  // for opening delelet modal
+  const openCloseDeleteModalHandler = () => {
+    setIsDeleteModalOpen((prevState) => !prevState);
+    // if user confirm the delete msg then REMOVE_TODO action will dispatch from the delete modal
   };
 
   //-----------------------------------------Redux state with useSlector hook------------------------------//
@@ -36,12 +35,13 @@ function AllTasks() {
     return todos.map((todo: TodoState) => (
       <TodoCard
         priority={todo.priority}
-        onDeleteTodo={removeTodoHandler}
+        openCloseDeleteModal={openCloseDeleteModalHandler}
         id={todo.id}
         key={todo.id}
         todoTitle={todo.title}
         todoDescription={todo.description}
         eta={todo.eta}
+        isDeleteModalOpen={isDeleteModalOpen}
       />
     ));
   };

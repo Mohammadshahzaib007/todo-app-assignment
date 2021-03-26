@@ -6,18 +6,36 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { AppActionTypes } from "../../store/types/action";
+import { OPEN_SNACKBAR, REMOVE_TODO } from "../../store/actions/actionTypes";
 
+type Props = {
+  isDeleteModalOpen: boolean;
+  todoId: string;
+  openCloseDeleteModal: () => void;
+};
 
+export default function DeleteModal(props: Props) {
+  const { isDeleteModalOpen, openCloseDeleteModal, todoId } = props;
 
-export default function DeleteModal() {
-  const [open, setOpen] = React.useState(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
+  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
   const handleClose = () => {
-    setOpen(false);
+    openCloseDeleteModal();
+  };
+  const DeleteConfirmationHandler = (id: string) => {
+    dispatch({ type: REMOVE_TODO, id: id });
+    handleClose();
+    dispatch({
+      type: OPEN_SNACKBAR,
+      payload: {
+        color: "success",
+        open: true,
+        content: "Todo deleted successfully",
+      },
+    });
   };
 
   return (
@@ -26,7 +44,7 @@ export default function DeleteModal() {
         Open alert dialog
       </Button> */}
       <Dialog
-        open={open}
+        open={isDeleteModalOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -41,15 +59,15 @@ export default function DeleteModal() {
         <DialogActions>
           <Button
             onClick={handleClose}
-            style={{marginRight: '10px'}}
+            style={{ marginRight: "10px" }}
             color="primary"
           >
             Cancle
           </Button>
           <Button
             variant="contained"
-            onClick={handleClose}
-          disableElevation
+            onClick={() => DeleteConfirmationHandler(todoId)}
+            disableElevation
             color="secondary"
             autoFocus
             startIcon={<DeleteIcon />}
