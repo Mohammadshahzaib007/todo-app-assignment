@@ -132,6 +132,7 @@ export default function AddTodoModal(props: Props) {
         description: state.description,
         eta: state.eta,
         priority: state.priority,
+        isCompleted: false,
       },
     });
 
@@ -157,7 +158,8 @@ export default function AddTodoModal(props: Props) {
         <DialogTitle id="form-dialog-title">Add Tasks</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          Checking items off a to-do list doesn’t determine progress; focusing on your priorities is what counts.
+            Checking items off a to-do list doesn’t determine progress; focusing
+            on your priorities is what counts.
           </DialogContentText>
           <TextField
             autoFocus
@@ -191,7 +193,6 @@ export default function AddTodoModal(props: Props) {
             }
           />
           <TextField
-            autoFocus
             className={classes.input}
             margin="dense"
             InputLabelProps={{

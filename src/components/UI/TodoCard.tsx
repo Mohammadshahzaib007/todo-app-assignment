@@ -42,16 +42,22 @@ type Props = {
   todoDescription: string;
   eta: string;
   openCloseDeleteModal: () => void;
-  id: string;
+  todoId: string;
   priority: string;
   isDeleteModalOpen: boolean,
- 
+  DeleteConfirmationHandler: (id: string) => void,
+  markAsCompleted: (id:string) => void
 };
 
 export default function TodoCard(props: Props) {
   const classes = useStyles();
 
-  const { todoTitle, todoDescription, eta, openCloseDeleteModal,  id, priority, isDeleteModalOpen } = props;
+  const { todoTitle, todoDescription, eta, openCloseDeleteModal, DeleteConfirmationHandler, todoId, priority, isDeleteModalOpen, markAsCompleted } = props;
+
+  const deleteTodo = () => {
+    DeleteConfirmationHandler(todoId)
+    console.log(todoId)
+  }
 
   let borderColor = "";
 
@@ -91,7 +97,7 @@ export default function TodoCard(props: Props) {
 
             <div>
               <Tooltip title="Mark as completed">
-                <IconButton color="secondary">
+                <IconButton color="secondary" onClick={() => markAsCompleted(todoId)}>
                   <DoneIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -103,7 +109,7 @@ export default function TodoCard(props: Props) {
               </Tooltip>
 
               <Tooltip title="Delete todo">
-                <IconButton color="secondary" onClick={ openCloseDeleteModal}>
+                <IconButton color="secondary" onClick={deleteTodo}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -111,7 +117,8 @@ export default function TodoCard(props: Props) {
           </CardActions>
         </Card>
       </Badge>
-      <DeleteModal isDeleteModalOpen={isDeleteModalOpen} openCloseDeleteModal={openCloseDeleteModal} todoId={id}/>
+      {/* there are some error while openig dialog (i'll fix it later) */}
+      <DeleteModal isDeleteModalOpen={isDeleteModalOpen} openCloseDeleteModal={openCloseDeleteModal} deleteTodo={deleteTodo}/>
     </div>
   );
 }

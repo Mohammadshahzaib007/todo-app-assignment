@@ -1,6 +1,7 @@
 // array of todos
 export interface TodosState {
-    todos: Array<TodoState>
+    todos: Array<TodoState>,
+
 }
 
 // a single todo
@@ -10,6 +11,7 @@ export interface TodoState {
     title: string,
     description: string,
     eta: string,
+    isCompleted: boolean
 }
 
 export interface SnackbarState {

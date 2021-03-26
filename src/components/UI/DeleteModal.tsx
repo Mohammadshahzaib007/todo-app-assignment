@@ -6,37 +6,34 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
-import { AppActionTypes } from "../../store/types/action";
-import { OPEN_SNACKBAR, REMOVE_TODO } from "../../store/actions/actionTypes";
+
 
 type Props = {
   isDeleteModalOpen: boolean;
-  todoId: string;
   openCloseDeleteModal: () => void;
+  deleteTodo: () => void;
 };
 
 export default function DeleteModal(props: Props) {
-  const { isDeleteModalOpen, openCloseDeleteModal, todoId } = props;
+  const { isDeleteModalOpen, openCloseDeleteModal, deleteTodo } = props;
 
-  //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
-  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
+  // //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
+  // const dispatch = useDispatch<Dispatch<AppActionTypes>>();
   const handleClose = () => {
     openCloseDeleteModal();
   };
-  const DeleteConfirmationHandler = (id: string) => {
-    dispatch({ type: REMOVE_TODO, id: id });
-    handleClose();
-    dispatch({
-      type: OPEN_SNACKBAR,
-      payload: {
-        color: "success",
-        open: true,
-        content: "Todo deleted successfully",
-      },
-    });
-  };
+  // const DeleteConfirmationHandler = (id: string) => {
+  //   dispatch({ type: REMOVE_TODO, id: id });
+  //   handleClose();
+  //   dispatch({
+  //     type: OPEN_SNACKBAR,
+  //     payload: {
+  //       color: "success",
+  //       open: true,
+  //       content: "Todo deleted successfully",
+  //     },
+  //   });
+  // };
 
   return (
     <div>
@@ -66,7 +63,10 @@ export default function DeleteModal(props: Props) {
           </Button>
           <Button
             variant="contained"
-            onClick={() => DeleteConfirmationHandler(todoId)}
+            onClick={() => {
+              handleClose();
+              deleteTodo();
+            }}
             disableElevation
             color="secondary"
             autoFocus
