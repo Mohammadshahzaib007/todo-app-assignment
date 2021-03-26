@@ -1,12 +1,91 @@
-import { Container } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
+import { Container, Grid, makeStyles } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import Nodata from "../components/UI/Nodata";
+import { AppState } from "../store";
+import { AppActionTypes } from "../store/types/action";
+import { OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
+import { TodoState } from "../store/types/stateTypes";
+import TodoCard from "../components/UI/TodoCard";
+
+const useStyles = makeStyles({
+  mainContainer: {
+    width: "100%",
+    height: "calc(85vh - 15.625rem)",
+    overflow: "auto",
+  },
+});
 
 function PendingTasks() {
+  const classes = useStyles();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
+  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
+
+  // for opening delelet modal
+  const openCloseDeleteModalHandler = () => {
+    setIsDeleteModalOpen((prevState) => !prevState);
+    // if user confirm the delete msg then REMOVE_TODO action will dispatch from the delete modal
+  };
+
+  // it will be used in the delete modal component
+  // for now it won't be used in delete component (it is being used in the card-todo component)
+  const DeleteConfirmationHandler = (id: string) => {
+    dispatch({ type: REMOVE_TODO, id: id });
+
+    dispatch({
+      type: OPEN_SNACKBAR,
+      payload: {
+        color: "success",
+        open: true,
+        content: "Todo deleted successfully",
+      },
+    });
+  };
+
+  //-----------------------------------------Redux state with useSlector hook------------------------------//
+  //-----------------------------------------All Todos------------------------------//
+  const todos = useSelector((state: AppState) => state.todo.todos);
+
+  // for getting rid of error
+  type Todos = typeof todos;
+
+  // filter completed Todos
+  const pendingTodos: Todos = [];
+
+  const todoLists = () => {
+    return pendingTodos.map((todo: TodoState) => (
+      <TodoCard
+        priority={todo.priority}
+        openCloseDeleteModal={openCloseDeleteModalHandler}
+        todoId={todo.id}
+        key={todo.id}
+        todoTitle={todo.title}
+        todoDescription={todo.description}
+        eta={todo.eta}
+        isDeleteModalOpen={isDeleteModalOpen}
+        DeleteConfirmationHandler={DeleteConfirmationHandler}
+        // for get rid of the error
+        markAsCompleted={() => {}}
+        isCompleted={todo.isCompleted}
+      />
+    ));
+  };
+
   return (
-    <section>
-      <Container>
-        <h1>I am Pending Tasks</h1>
-      </Container>
+    <section className={classes.mainContainer}>
+      {todos.length === 0 ? (
+        <Nodata title="There aren't any pending tasks, Well Done... 🤗 " />
+      ) : (
+        <Container>
+          <Grid container wrap="wrap">
+            {todoLists()}
+          </Grid>
+        </Container>
+      )}
     </section>
   );
 }

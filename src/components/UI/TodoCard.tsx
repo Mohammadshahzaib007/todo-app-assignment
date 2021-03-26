@@ -111,6 +111,7 @@ export default function TodoCard(props: Props) {
             <div>
               <Tooltip title="Mark as completed">
                 <IconButton
+                  disabled={isCompleted}
                   color="secondary"
                   onClick={() => markAsCompleted(todoId)}
                 >
