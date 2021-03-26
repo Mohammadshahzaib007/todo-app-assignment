@@ -1,5 +1,5 @@
-import { ADD_TODO, REMOVE_TODO } from "../actions/actionTypes";
-import { TodoState } from "./stateTypes";
+import { ADD_TODO, CLOSE_SNACKBAR, OPEN_SNACKBAR, REMOVE_TODO } from "../actions/actionTypes";
+import { SnackbarState, TodoState } from "./stateTypes";
 
 export interface AddTodo {
     type: typeof ADD_TODO,
@@ -11,6 +11,17 @@ export interface RemoveTodo {
     id: string,
 }
 
+export interface OpenSnackbar {
+    type: typeof OPEN_SNACKBAR,
+    payload: SnackbarState
+}
+
+export interface CloseSnackbar {
+    type: typeof CLOSE_SNACKBAR
+}
+
 export type TodoActionTypes = AddTodo | RemoveTodo;
 
-export type AppActionTypes = TodoActionTypes
+export type SnackbarActionTypes = OpenSnackbar | CloseSnackbar;
+
+export type AppActionTypes = TodoActionTypes | SnackbarActionTypes

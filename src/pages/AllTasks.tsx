@@ -6,11 +6,15 @@ import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
 import { REMOVE_TODO } from "../store/actions/actionTypes";
 import { TodoState } from "../store/types/stateTypes";
+import Nodata from "../components/UI/Nodata";
+// react flip move is for animation
+// import FlipMove from 'react-flip-move';
 
 const useStyles = makeStyles({
   mainContainer: {
     width: "100%",
-    minHeight: "calc(85vh - 15.625rem)",
+    height: "calc(85vh - 15.625rem)",
+    overflow: 'auto'
   },
 });
 
@@ -43,12 +47,15 @@ function AllTasks() {
 
   return (
     <section className={classes.mainContainer}>
-      <Container>
-        <Grid container wrap="wrap">
-          {" "}
-          {todoLists()}{" "}
-        </Grid>
-      </Container>
+      {todos.length === 0 ? (
+        <Nodata title="There aren't any tasks for today..😊 " />
+      ) : (
+        <Container>
+          <Grid container wrap="wrap">
+            {todoLists()}
+          </Grid>
+        </Container>
+      )}
     </section>
   );
 }

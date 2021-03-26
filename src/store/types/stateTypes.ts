@@ -1,3 +1,4 @@
+// array of todos
 export interface TodosState {
     todos: Array<TodoState>
 }
@@ -9,4 +10,9 @@ export interface TodoState {
     title: string,
     description: string,
     eta: string,
+}
+
+export interface SnackbarState {
+    open: boolean,
+    color?: 'error' | 'warning' | 'info' | 'success'
 }

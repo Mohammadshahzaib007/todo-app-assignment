@@ -2,6 +2,7 @@ import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import todoReducer from './reducers/todo'
+import snackbarReducer from './reducers/snackbar'
 import { AppActionTypes } from "./types/action";
 
 
@@ -20,7 +21,8 @@ declare global {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    todo: todoReducer
+    todo: todoReducer,
+    snackbar: snackbarReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

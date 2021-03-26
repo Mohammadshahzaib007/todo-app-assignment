@@ -105,7 +105,12 @@ export default function AddTodoModal(props: Props) {
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
   const addTodoHandler = () => {
-    if (state.title === "" || state.description === "" || state.eta === "")
+    if (
+      state.title === "" ||
+      state.description === "" ||
+      state.eta === "" ||
+      state.priority === ""
+    )
       return false;
 
     handleClose();
@@ -155,6 +160,7 @@ export default function AddTodoModal(props: Props) {
             className={classes.input}
             margin="dense"
             label="Description"
+            multiline
             type="textarea"
             fullWidth
             color="secondary"
