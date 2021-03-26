@@ -176,7 +176,6 @@ export default function AddTodoModal(props: Props) {
             }
           />
           <TextField
-            autoFocus
             className={classes.input}
             margin="dense"
             label="Description"

@@ -73,6 +73,7 @@ function AllTasks() {
         isDeleteModalOpen={isDeleteModalOpen}
         DeleteConfirmationHandler={DeleteConfirmationHandler}
         markAsCompleted={(id) => markAsCompleted(id)}
+        isCompleted={todo.isCompleted}
       />
     ));
   };

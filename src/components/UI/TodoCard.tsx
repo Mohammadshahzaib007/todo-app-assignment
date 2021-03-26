@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     padding: "3px 15px",
     color: "#C51162",
     backgroundColor: "rgba(197, 17, 98, 0.1)",
-
+    marginTop: "10px",
     borderRadius: "5px",
   },
   cardActionContainer: {
@@ -44,20 +44,32 @@ type Props = {
   openCloseDeleteModal: () => void;
   todoId: string;
   priority: string;
-  isDeleteModalOpen: boolean,
-  DeleteConfirmationHandler: (id: string) => void,
-  markAsCompleted: (id:string) => void
+  isDeleteModalOpen: boolean;
+  DeleteConfirmationHandler: (id: string) => void;
+  markAsCompleted: (id: string) => void;
+  isCompleted: boolean;
 };
 
 export default function TodoCard(props: Props) {
   const classes = useStyles();
 
-  const { todoTitle, todoDescription, eta, openCloseDeleteModal, DeleteConfirmationHandler, todoId, priority, isDeleteModalOpen, markAsCompleted } = props;
+  const {
+    todoTitle,
+    todoDescription,
+    eta,
+    openCloseDeleteModal,
+    DeleteConfirmationHandler,
+    todoId,
+    priority,
+    isDeleteModalOpen,
+    markAsCompleted,
+    isCompleted,
+  } = props;
 
   const deleteTodo = () => {
-    DeleteConfirmationHandler(todoId)
-    console.log(todoId)
-  }
+    DeleteConfirmationHandler(todoId);
+    console.log(todoId);
+  };
 
   let borderColor = "";
 
@@ -68,7 +80,8 @@ export default function TodoCard(props: Props) {
   if (priority === "low") borderColor = "yellow";
 
   return (
-    <div id="card">
+    <div id="card" style={{ marginTop: "20px" }}>
+      {isCompleted && <span className="completed-badge">Completed</span>}
       <Badge
         badgeContent={priority.slice(0, 1).toLocaleUpperCase()}
         color="secondary"
@@ -97,7 +110,10 @@ export default function TodoCard(props: Props) {
 
             <div>
               <Tooltip title="Mark as completed">
-                <IconButton color="secondary" onClick={() => markAsCompleted(todoId)}>
+                <IconButton
+                  color="secondary"
+                  onClick={() => markAsCompleted(todoId)}
+                >
                   <DoneIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
@@ -118,7 +134,11 @@ export default function TodoCard(props: Props) {
         </Card>
       </Badge>
       {/* there are some error while openig dialog (i'll fix it later) */}
-      <DeleteModal isDeleteModalOpen={isDeleteModalOpen} openCloseDeleteModal={openCloseDeleteModal} deleteTodo={deleteTodo}/>
+      <DeleteModal
+        isDeleteModalOpen={isDeleteModalOpen}
+        openCloseDeleteModal={openCloseDeleteModal}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 }

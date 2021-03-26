@@ -5,11 +5,7 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
-import {
-  MARK_AS_COMPLETED,
-  OPEN_SNACKBAR,
-  REMOVE_TODO,
-} from "../store/actions/actionTypes";
+import { OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { TodoState } from "../store/types/stateTypes";
 
@@ -50,11 +46,6 @@ function CompletedTasks() {
     });
   };
 
-  // for marking todo as completed
-  const markAsCompleted = (id: string) => {
-    dispatch({ type: MARK_AS_COMPLETED, id: id });
-  };
-
   //-----------------------------------------Redux state with useSlector hook------------------------------//
   //-----------------------------------------All Todos------------------------------//
   const todos = useSelector((state: AppState) => state.todo.todos);
@@ -74,7 +65,9 @@ function CompletedTasks() {
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
         DeleteConfirmationHandler={DeleteConfirmationHandler}
-        markAsCompleted={(id) => markAsCompleted(id)}
+        // for get rid of the error
+        markAsCompleted={() => {}}
+        isCompleted={todo.isCompleted}
       />
     ));
   };
