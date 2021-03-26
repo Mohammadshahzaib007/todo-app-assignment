@@ -108,6 +108,13 @@ export default function AddTodoModal(props: Props) {
   //-----------------------------------------modal open state------------------------------//
   const open = useSelector((state: AppState) => state.addTodoModal.open);
 
+  //-----------------------------------------todo that have to be edited ------------------------------//
+  // const todoHaveToEdit = useSelector((state: AppState) => state.todo.todoThatHaveToEdit);
+
+  // const editTodoHandler = () => {
+
+  // }
+
   const addTodoHandler = () => {
     if (
       state.title === "" ||
