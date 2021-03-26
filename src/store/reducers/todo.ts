@@ -13,7 +13,7 @@ const todoReducer = (state = initialTodoState, action: AppActionTypes): State =>
         case ADD_TODO:
             return {
                 ...state,
-                todos: [...state.todos, action.payload]
+                todos: [action.payload, ...state.todos]
             }
         case REMOVE_TODO:
             const updatedTodos = state.todos.filter(item => item.id !== action.id)

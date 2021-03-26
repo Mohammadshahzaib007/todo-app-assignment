@@ -4,6 +4,7 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 import todoReducer from './reducers/todo'
 import snackbarReducer from './reducers/snackbar'
 import { AppActionTypes } from "./types/action";
+import addTodoModalReducer from "./reducers/addTodoModal";
 
 
 
@@ -22,7 +23,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     todo: todoReducer,
-    snackbar: snackbarReducer
+    snackbar: snackbarReducer,
+    addTodoModal: addTodoModalReducer
 })
 
 export type AppState = ReturnType<typeof rootReducer>

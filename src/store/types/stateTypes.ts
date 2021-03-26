@@ -14,8 +14,14 @@ export interface TodoState {
     isCompleted: boolean
 }
 
+// for snackbar
 export interface SnackbarState {
     open: boolean,
     color?: 'error' | 'warning' | 'info' | 'success',
     content: string,
+}
+
+// for addTodoModal
+export interface AddTodoModalReducer {
+    open: boolean
 }

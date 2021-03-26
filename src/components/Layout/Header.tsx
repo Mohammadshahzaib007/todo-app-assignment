@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Container,
@@ -9,6 +9,10 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import { NavLink } from "react-router-dom";
 import AddTodoModal from "../../containers/AddTodoModal";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { AppActionTypes } from "../../store/types/action";
+import { CLOSE_ADD_TODO_MODAL, OPEN_ADD_TODO_MODAL } from "../../store/actions/actionTypes";
 
 const useStyles = makeStyles({
   header: {
@@ -28,14 +32,17 @@ const useStyles = makeStyles({
 function Header() {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch<Dispatch<AppActionTypes>>()
+ 
 
   const handleClickOpen = () => {
-    setOpen(true);
+    // setOpen(true);
+    dispatch({type: OPEN_ADD_TODO_MODAL})
   };
 
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    dispatch({type: CLOSE_ADD_TODO_MODAL})
   };
 
   // this data for looping
@@ -78,7 +85,7 @@ function Header() {
         <Container>
           <Grid container>
             {NavLinks.map((item, i) => (
-              <Grid item container justify="center" xs={4} key={i}>
+              <Grid item container justify="center" xs={12} md={4} key={i}>
                 <NavLink
                   exact
                   to={item.link}
@@ -92,7 +99,7 @@ function Header() {
             ))}
           </Grid>
         </Container>
-        <AddTodoModal handleClose={handleClose} open={open} />
+        <AddTodoModal handleClose={handleClose}  />
       </section>
     </>
   );

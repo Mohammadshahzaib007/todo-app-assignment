@@ -1,4 +1,4 @@
-import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_SNACKBAR, REMOVE_TODO } from "../actions/actionTypes";
+import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO, CLOSE_ADD_TODO_MODAL } from "../actions/actionTypes";
 import { SnackbarState, TodoState } from "./stateTypes";
 
 //-----------------------------------------todo action types------------------------------------//
@@ -31,5 +31,16 @@ export interface CloseSnackbar {
 
 export type SnackbarActionTypes = OpenSnackbar | CloseSnackbar;
 
+//-----------------------------------------add todo modal action types------------------------------------//
+export interface OpenAddTodoModal {
+    type: typeof OPEN_ADD_TODO_MODAL,
+}
+
+export interface CloseAddTodoModal {
+    type: typeof CLOSE_ADD_TODO_MODAL
+}
+
+export type AddTodoModalTypes = OpenAddTodoModal | CloseAddTodoModal;
+
 //-----------------------------------------app action types------------------------------------//
-export type AppActionTypes = TodoActionTypes | SnackbarActionTypes
+export type AppActionTypes = TodoActionTypes | SnackbarActionTypes | AddTodoModalTypes

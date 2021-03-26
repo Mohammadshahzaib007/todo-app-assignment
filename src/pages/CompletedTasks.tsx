@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
-import { OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
+import { OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { TodoState } from "../store/types/stateTypes";
 
@@ -33,7 +33,7 @@ function CompletedTasks() {
 
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
-  const DeleteConfirmationHandler = (id: string) => {
+  const deleteConfirmationHandler = (id: string) => {
     dispatch({ type: REMOVE_TODO, id: id });
 
     dispatch({
@@ -53,9 +53,15 @@ function CompletedTasks() {
   // filter completed Todos
   const completedTodos = todos.filter((item) => item.isCompleted === true);
 
+  //-----------------------------------------edit todo------------------------------//
+  const editTodo = (id: string) => {
+    dispatch({ type: OPEN_ADD_TODO_MODAL });
+  };
+
   const todoLists = () => {
     return completedTodos.map((todo: TodoState) => (
       <TodoCard
+        onEditTodo={() => editTodo(todo.id)}
         priority={todo.priority}
         openCloseDeleteModal={openCloseDeleteModalHandler}
         todoId={todo.id}
@@ -64,7 +70,7 @@ function CompletedTasks() {
         todoDescription={todo.description}
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
-        DeleteConfirmationHandler={DeleteConfirmationHandler}
+        deleteConfirmationHandler={deleteConfirmationHandler}
         // for get rid of the error
         markAsCompleted={() => {}}
         isCompleted={todo.isCompleted}

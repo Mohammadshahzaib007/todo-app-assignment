@@ -7,6 +7,7 @@ import { TodoState } from "../store/types/stateTypes";
 import Nodata from "../components/UI/Nodata";
 import {
   MARK_AS_COMPLETED,
+  OPEN_ADD_TODO_MODAL,
   OPEN_SNACKBAR,
   REMOVE_TODO,
 } from "../store/actions/actionTypes";
@@ -38,7 +39,7 @@ function AllTasks() {
 
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
-  const DeleteConfirmationHandler = (id: string) => {
+  const deleteConfirmationHandler = (id: string) => {
     dispatch({ type: REMOVE_TODO, id: id });
 
     dispatch({
@@ -60,6 +61,11 @@ function AllTasks() {
   //-----------------------------------------All Todos------------------------------//
   const todos = useSelector((state: AppState) => state.todo.todos);
 
+  //-----------------------------------------edit todo------------------------------//
+  const editTodo = (id: string) => {
+    dispatch({ type: OPEN_ADD_TODO_MODAL });
+  };
+
   const todoLists = () => {
     return todos.map((todo: TodoState) => (
       <TodoCard
@@ -71,9 +77,10 @@ function AllTasks() {
         todoDescription={todo.description}
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
-        DeleteConfirmationHandler={DeleteConfirmationHandler}
+        deleteConfirmationHandler={deleteConfirmationHandler}
         markAsCompleted={(id) => markAsCompleted(id)}
         isCompleted={todo.isCompleted}
+        onEditTodo={() => editTodo(todo.id)}
       />
     ));
   };

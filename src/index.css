@@ -40,3 +40,10 @@ body {
   top: 10px;
   right: 10px;
 }
+
+
+@media(max-width: 900px) {
+  html {
+    font-size: 13px;
+  }
+}

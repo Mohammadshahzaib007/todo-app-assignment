@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ADD_TODO, OPEN_SNACKBAR } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +17,7 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
+import { AppState } from "../store";
 
 //-----------------------------------------Material UI------------------------------------//
 const useStyles = makeStyles({
@@ -28,7 +29,6 @@ const useStyles = makeStyles({
 //-----------------------------------------props types------------------------------------//
 type Props = {
   handleClose: () => void;
-  open: boolean;
 };
 
 //-----------------------------------------state types for local------------------------------------//
@@ -93,16 +93,22 @@ const reducer = (state: State, action: AddTodoAction): State => {
 //-----------------------------------------component------------------------------------//
 export default function AddTodoModal(props: Props) {
   //-----------------------------------------props destructuring------------------------------------//
-  const { handleClose, open } = props;
+  const { handleClose } = props;
 
   //-----------------------------------------classes for style------------------------------------//
   const classes = useStyles();
+
 
   //-----------------------------------------local state and its dispatch------------------------------------//
   const [state, localDispatch] = useReducer(reducer, initialState);
 
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
+
+
+   //-----------------------------------------Redux state with useSlector hook------------------------------//
+  //-----------------------------------------modal open state------------------------------//
+  const open = useSelector((state: AppState) => state.addTodoModal.open);
 
   const addTodoHandler = () => {
     if (

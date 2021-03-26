@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
-import { OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
+import { OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
 import { TodoState } from "../store/types/stateTypes";
 import TodoCard from "../components/UI/TodoCard";
 
@@ -33,7 +33,7 @@ function PendingTasks() {
 
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
-  const DeleteConfirmationHandler = (id: string) => {
+  const deleteConfirmationHandler = (id: string) => {
     dispatch({ type: REMOVE_TODO, id: id });
 
     dispatch({
@@ -56,6 +56,12 @@ function PendingTasks() {
   // filter completed Todos
   const pendingTodos: Todos = [];
 
+  //-----------------------------------------edit todo------------------------------//
+  const editTodo = (id: string) => {
+    dispatch({ type: OPEN_ADD_TODO_MODAL });
+    console.log('onEdit', id)
+  };
+
   const todoLists = () => {
     return pendingTodos.map((todo: TodoState) => (
       <TodoCard
@@ -67,10 +73,11 @@ function PendingTasks() {
         todoDescription={todo.description}
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
-        DeleteConfirmationHandler={DeleteConfirmationHandler}
+        deleteConfirmationHandler={deleteConfirmationHandler}
         // for get rid of the error
         markAsCompleted={() => {}}
         isCompleted={todo.isCompleted}
+        onEditTodo={() => editTodo(todo.id)}
       />
     ));
   };
