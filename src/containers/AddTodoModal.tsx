@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch } from "react-redux";
-import { ADD_TODO } from "../store/actions/actionTypes";
+import { ADD_TODO, OPEN_SNACKBAR } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -110,8 +110,17 @@ export default function AddTodoModal(props: Props) {
       state.description === "" ||
       state.eta === "" ||
       state.priority === ""
-    )
+    ) {
+      dispatch({
+        type: OPEN_SNACKBAR,
+        payload: {
+          color: "error",
+          open: true,
+          content: "Please Entere Valid Data or don't left any field empty",
+        },
+      });
       return false;
+    }
 
     handleClose();
 
@@ -125,6 +134,16 @@ export default function AddTodoModal(props: Props) {
         priority: state.priority,
       },
     });
+
+    // for success msg
+    dispatch({
+      type: OPEN_SNACKBAR,
+      payload: {
+        color: "success",
+        open: true,
+        content: "Todo was added succesfully",
+      },
+    });
     localDispatch({ type: "CLEAR_FIELDS", payload: "" });
   };
 
@@ -135,11 +154,10 @@ export default function AddTodoModal(props: Props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Tasks</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
+          Checking items off a to-do list doesn’t determine progress; focusing on your priorities is what counts.
           </DialogContentText>
           <TextField
             autoFocus

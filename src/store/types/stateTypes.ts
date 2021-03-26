@@ -14,5 +14,6 @@ export interface TodoState {
 
 export interface SnackbarState {
     open: boolean,
-    color?: 'error' | 'warning' | 'info' | 'success'
+    color?: 'error' | 'warning' | 'info' | 'success',
+    content: string,
 }

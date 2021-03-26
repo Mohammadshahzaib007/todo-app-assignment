@@ -1,8 +1,13 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import {Snackbar as SnackbarMui }from '@material-ui/core/';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import { Snackbar as SnackbarMui } from "@material-ui/core/";
+import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../store";
+import { Dispatch } from "redux";
+import { AppActionTypes } from "../../store/types/action";
+import { CLOSE_SNACKBAR } from "../../store/actions/actionTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -10,8 +15,8 @@ function Alert(props: AlertProps) {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: '100%',
-    '& > * + *': {
+    width: "100%",
+    "& > * + *": {
       marginTop: theme.spacing(2),
     },
   },
@@ -19,34 +24,38 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function Snackbar() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  //-----------------------------------------Redux state with useSlector hook------------------------------//
+  //-----------------------------------------SNACKBAR DATA------------------------------//
+  const { color, content, open } = useSelector(
+    (state: AppState) => state.snackbar
+  );
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
+  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
-    setOpen(false);
+    dispatch({ type: CLOSE_SNACKBAR });
   };
 
   return (
     <div className={classes.root}>
-      <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button>
-      <SnackbarMui open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-          This is a success message!
+      <SnackbarMui
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <Alert onClose={handleClose} severity={color}>
+          {content}
         </Alert>
       </SnackbarMui>
-      <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert>
     </div>
   );
 }
