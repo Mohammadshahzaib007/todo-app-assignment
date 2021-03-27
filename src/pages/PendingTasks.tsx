@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
@@ -22,20 +22,10 @@ const useStyles = makeStyles({
 function PendingTasks() {
   const classes = useStyles();
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
-  // for opening delelet modal
-  const openCloseDeleteModalHandler = () => {
-    setIsDeleteModalOpen((prevState) => !prevState);
-    // if user confirm the delete msg then REMOVE_TODO action will dispatch from the delete modal
-  };
-
-  // it will be used in the delete modal component
-  // for now it won't be used in delete component (it is being used in the card-todo component)
-  const deleteConfirmationHandler = (id: string) => {
+  const deleteTodo = (id: string) => {
     dispatch(removeTodo(id));
 
     dispatch(
@@ -62,7 +52,7 @@ function PendingTasks() {
     dispatch(editTodo(id));
   };
 
-  // for marking todo as completed or undo 
+  // for marking todo as completed or undo
   const markAsCompletedTodo = (id: string) => {
     dispatch(markAsCompleted(id));
   };
@@ -71,15 +61,12 @@ function PendingTasks() {
     return pendingTodos.map((todo: TodoState) => (
       <TodoCard
         priority={todo.priority}
-        openCloseDeleteModal={openCloseDeleteModalHandler}
         todoId={todo.id}
         key={todo.id}
         todoTitle={todo.title}
         todoDescription={todo.description}
         eta={todo.eta}
-        isDeleteModalOpen={isDeleteModalOpen}
-        deleteConfirmationHandler={deleteConfirmationHandler}
-        // for get rid of the error
+        deleteTodo={() => deleteTodo(todo.id)}
         markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
         onEditTodo={editSelectedTodo}

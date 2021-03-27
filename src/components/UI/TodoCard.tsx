@@ -9,7 +9,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import Badge from "@material-ui/core/Badge";
-import DeleteModal from "./DeleteModal";
 import UndoIcon from "@material-ui/icons/Undo";
 
 const useStyles = makeStyles({
@@ -42,11 +41,10 @@ type Props = {
   todoTitle: string;
   todoDescription: string;
   eta: string;
-  openCloseDeleteModal: () => void;
+
   todoId: string;
   priority: string;
-  isDeleteModalOpen: boolean;
-  deleteConfirmationHandler: (id: string) => void;
+  deleteTodo: () => void;
   markAsCompleted: (id: string) => void;
   isCompleted: boolean;
   onEditTodo: (id: string) => void;
@@ -59,12 +57,12 @@ export default function TodoCard(props: Props) {
     todoTitle,
     todoDescription,
     eta,
-    openCloseDeleteModal,
-    deleteConfirmationHandler,
+    deleteTodo,
+
     onEditTodo,
     todoId,
     priority,
-    isDeleteModalOpen,
+
     markAsCompleted,
     isCompleted,
   } = props;
@@ -76,10 +74,6 @@ export default function TodoCard(props: Props) {
   }
   if (priority === "medium") borderColor = "#FF8C00";
   if (priority === "low") borderColor = "yellow";
-
-  const deleteTodo = () => {
-    deleteConfirmationHandler(todoId);
-  };
 
   const onEdit = () => {
     onEditTodo(todoId);
@@ -154,12 +148,6 @@ export default function TodoCard(props: Props) {
           </CardActions>
         </Card>
       </Badge>
-      {/* there are some error while openig dialog (i'll fix it later) */}
-      <DeleteModal
-        isDeleteModalOpen={isDeleteModalOpen}
-        openCloseDeleteModal={openCloseDeleteModal}
-        deleteTodo={deleteTodo}
-      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React  from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
@@ -22,20 +22,12 @@ const useStyles = makeStyles({
 function CompletedTasks() {
   const classes = useStyles();
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
-  // for opening delelet modal
-  const openCloseDeleteModalHandler = () => {
-    setIsDeleteModalOpen((prevState) => !prevState);
-    // if user confirm the delete msg then REMOVE_TODO action will dispatch from the delete modal
-  };
-
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
-  const deleteConfirmationHandler = (id: string) => {
+  const deleteTodo = (id: string) => {
     dispatch(removeTodo(id));
 
     dispatch(
@@ -60,25 +52,22 @@ function CompletedTasks() {
     dispatch(editTodo(id));
   };
 
- // for unmarking todo as completed
- const markAsCompletedTodo = (id: string) => {
-  dispatch(markAsCompleted(id));
-};
-
+  // for unmarking todo as completed
+  const markAsCompletedTodo = (id: string) => {
+    dispatch(markAsCompleted(id));
+  };
 
   const todoLists = () => {
     return completedTodos.map((todo: TodoState) => (
       <TodoCard
         onEditTodo={editSelectedTodo}
         priority={todo.priority}
-        openCloseDeleteModal={openCloseDeleteModalHandler}
         todoId={todo.id}
         key={todo.id}
         todoTitle={todo.title}
         todoDescription={todo.description}
         eta={todo.eta}
-        isDeleteModalOpen={isDeleteModalOpen}
-        deleteConfirmationHandler={deleteConfirmationHandler}
+        deleteTodo={() => deleteTodo(todo.id)}
         markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
       />

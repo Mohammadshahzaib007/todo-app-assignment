@@ -11,29 +11,19 @@ import DeleteIcon from "@material-ui/icons/Delete";
 type Props = {
   isDeleteModalOpen: boolean;
   openCloseDeleteModal: () => void;
-  deleteTodo: () => void;
+  deleteTodo: (id:string) => void;
+  id: string;
 };
 
 export default function DeleteModal(props: Props) {
-  const { isDeleteModalOpen, openCloseDeleteModal, deleteTodo } = props;
+  const { isDeleteModalOpen, openCloseDeleteModal, deleteTodo, id } = props;
 
-  // //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
-  // const dispatch = useDispatch<Dispatch<AppActionTypes>>();
+ 
   const handleClose = () => {
     openCloseDeleteModal();
+    
   };
-  // const DeleteConfirmationHandler = (id: string) => {
-  //   dispatch({ type: REMOVE_TODO, id: id });
-  //   handleClose();
-  //   dispatch({
-  //     type: OPEN_SNACKBAR,
-  //     payload: {
-  //       color: "success",
-  //       open: true,
-  //       content: "Todo deleted successfully",
-  //     },
-  //   });
-  // };
+
 
   return (
     <div>
@@ -65,7 +55,7 @@ export default function DeleteModal(props: Props) {
             variant="contained"
             onClick={() => {
               handleClose();
-              deleteTodo();
+              deleteTodo(id);
             }}
             disableElevation
             color="secondary"
