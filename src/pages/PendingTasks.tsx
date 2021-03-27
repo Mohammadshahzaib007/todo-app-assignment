@@ -5,13 +5,11 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
-import {
-  OPEN_ADD_TODO_MODAL,
-  OPEN_SNACKBAR,
-  REMOVE_TODO,
-} from "../store/actions/actionTypes";
+
 import { TodoState } from "../store/types/stateTypes";
 import TodoCard from "../components/UI/TodoCard";
+import { editTodo, removeTodo } from "../store/actions/todo";
+import { openSnackbar } from "../store/actions/snackbar";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -38,16 +36,15 @@ function PendingTasks() {
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
   const deleteConfirmationHandler = (id: string) => {
-    dispatch({ type: REMOVE_TODO, id: id });
+    dispatch(removeTodo(id));
 
-    dispatch({
-      type: OPEN_SNACKBAR,
-      payload: {
+    dispatch(
+      openSnackbar({
         color: "success",
         open: true,
         content: "Todo deleted successfully",
-      },
-    });
+      })
+    );
   };
 
   //-----------------------------------------Redux state with useSlector hook------------------------------//
@@ -61,8 +58,8 @@ function PendingTasks() {
   const pendingTodos: Todos = [];
 
   //-----------------------------------------edit todo------------------------------//
-  const editTodo = (id: string) => {
-    dispatch({ type: OPEN_ADD_TODO_MODAL });
+  const editSelectedTodo = (id: string) => {
+    dispatch(editTodo(id));
   };
 
   const todoLists = () => {
@@ -80,7 +77,7 @@ function PendingTasks() {
         // for get rid of the error
         markAsCompleted={() => {}}
         isCompleted={todo.isCompleted}
-        onEditTodo={editTodo}
+        onEditTodo={editSelectedTodo}
       />
     ));
   };

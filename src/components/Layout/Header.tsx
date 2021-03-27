@@ -12,7 +12,10 @@ import AddTodoModal from "../../containers/AddTodoModal";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { AppActionTypes } from "../../store/types/action";
-import { CLOSE_ADD_TODO_MODAL, OPEN_ADD_TODO_MODAL } from "../../store/actions/actionTypes";
+import {
+  closeAddTodoModal,
+  openAddTodoModal,
+} from "../../store/actions/addTodoModal";
 
 const useStyles = makeStyles({
   header: {
@@ -32,17 +35,14 @@ const useStyles = makeStyles({
 function Header() {
   const classes = useStyles();
 
-  const dispatch = useDispatch<Dispatch<AppActionTypes>>()
- 
+  const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
   const handleClickOpen = () => {
-    // setOpen(true);
-    dispatch({type: OPEN_ADD_TODO_MODAL})
+    dispatch(openAddTodoModal());
   };
 
   const handleClose = () => {
-    // setOpen(false);
-    dispatch({type: CLOSE_ADD_TODO_MODAL})
+    dispatch(closeAddTodoModal());
   };
 
   // this data for looping
@@ -99,7 +99,7 @@ function Header() {
             ))}
           </Grid>
         </Container>
-        <AddTodoModal handleClose={handleClose}  />
+        <AddTodoModal handleClose={handleClose} />
       </section>
     </>
   );

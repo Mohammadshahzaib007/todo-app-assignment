@@ -5,18 +5,12 @@ import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
 import { TodoState } from "../store/types/stateTypes";
 import Nodata from "../components/UI/Nodata";
-import {
-  EDIT_TODO,
-  MARK_AS_COMPLETED,
-  OPEN_ADD_TODO_MODAL,
-  OPEN_SNACKBAR,
-  REMOVE_TODO,
-} from "../store/actions/actionTypes";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { AppActionTypes } from "../store/types/action";
 import { openSnackbar } from "../store/actions/snackbar";
-import { removeTodo } from "../store/actions/todo";
+import { editTodo, markAsCompleted, removeTodo } from "../store/actions/todo";
+import { openAddTodoModal } from "../store/actions/addTodoModal";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -43,26 +37,20 @@ function AllTasks() {
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
   const deleteConfirmationHandler = (id: string) => {
-    // dispatch({ type: REMOVE_TODO, id: id });
-    dispatch(removeTodo(id))
-    // dispatch({
-    //   type: OPEN_SNACKBAR,
-    //   payload: {
-    //     color: "success",
-    //     open: true,
-    //     content: "Todo deleted successfully",
-    //   },
-    // });
-    dispatch(openSnackbar({
-      color: "success",
-      open: true,
-      content: "Todo deleted successfully",
-    }))
+    dispatch(removeTodo(id));
+
+    dispatch(
+      openSnackbar({
+        color: "success",
+        open: true,
+        content: "Todo deleted successfully",
+      })
+    );
   };
 
   // for marking todo as completed
-  const markAsCompleted = (id: string) => {
-    dispatch({ type: MARK_AS_COMPLETED, id: id });
+  const markAsCompletedTodo = (id: string) => {
+    dispatch(markAsCompleted(id));
   };
 
   //-----------------------------------------Redux state with useSlector hook------------------------------//
@@ -70,10 +58,9 @@ function AllTasks() {
   const todos = useSelector((state: AppState) => state.todo.todos);
 
   //-----------------------------------------edit todo------------------------------//
-  const editTodo = (id: string) => {
-    dispatch({ type: OPEN_ADD_TODO_MODAL });
-    dispatch({type: EDIT_TODO, id: id})
-
+  const editSelectedTodo = (id: string) => {
+    dispatch(openAddTodoModal());
+    dispatch(editTodo(id));
   };
 
   const todoLists = () => {
@@ -88,9 +75,9 @@ function AllTasks() {
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
         deleteConfirmationHandler={deleteConfirmationHandler}
-        markAsCompleted={(id) => markAsCompleted(id)}
+        markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
-        onEditTodo={editTodo}
+        onEditTodo={editSelectedTodo}
       />
     ));
   };

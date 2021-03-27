@@ -5,9 +5,11 @@ import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
-import { OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { TodoState } from "../store/types/stateTypes";
+import { removeTodo } from "../store/actions/todo";
+import { openSnackbar } from "../store/actions/snackbar";
+import { openAddTodoModal } from "../store/actions/addTodoModal";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -34,16 +36,15 @@ function CompletedTasks() {
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
   const deleteConfirmationHandler = (id: string) => {
-    dispatch({ type: REMOVE_TODO, id: id });
+    dispatch(removeTodo(id));
 
-    dispatch({
-      type: OPEN_SNACKBAR,
-      payload: {
+    dispatch(
+      openSnackbar({
         color: "success",
         open: true,
         content: "Todo deleted successfully",
-      },
-    });
+      })
+    );
   };
 
   //-----------------------------------------Redux state with useSlector hook------------------------------//
@@ -55,7 +56,7 @@ function CompletedTasks() {
 
   //-----------------------------------------edit todo------------------------------//
   const editTodo = (id: string) => {
-    dispatch({ type: OPEN_ADD_TODO_MODAL });
+    dispatch(openAddTodoModal());
   };
 
   const todoLists = () => {
