@@ -62,6 +62,7 @@ function PendingTasks() {
       <TodoCard
         priority={todo.priority}
         todoId={todo.id}
+        createdAt={todo.createdAt}
         key={todo.id}
         todoTitle={todo.title}
         todoDescription={todo.description}

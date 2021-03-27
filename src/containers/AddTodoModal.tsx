@@ -23,6 +23,7 @@ import {
   completedEditingTodo,
   removeTodoThatIsBeingUpdated,
 } from "../store/actions/todo";
+import moment from "moment";
 
 //-----------------------------------------Material UI------------------------------------//
 const useStyles = makeStyles({
@@ -174,6 +175,7 @@ export default function AddTodoModal(props: Props) {
           priority: state.priority,
           isCompleted: todoHaveToEdit.isCompleted,
           isBeingEdited: false,
+          createdAt: todoHaveToEdit.createdAt,
         })
       );
       dispatch(completedEditingTodo());
@@ -187,6 +189,7 @@ export default function AddTodoModal(props: Props) {
           priority: state.priority,
           isCompleted: todoHaveToEdit.isCompleted,
           isBeingEdited: false,
+          createdAt: moment().format("MMM Do YY"),
         })
       );
     }
@@ -267,9 +270,9 @@ export default function AddTodoModal(props: Props) {
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Priority</InputLabel>
             <Select
+              className={classes.input}
               fullWidth
               labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={state.priority}
               onChange={(e) =>
                 // @ts-ignore

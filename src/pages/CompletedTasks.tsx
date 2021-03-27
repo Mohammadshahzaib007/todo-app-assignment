@@ -62,6 +62,7 @@ function CompletedTasks() {
       <TodoCard
         onEditTodo={editSelectedTodo}
         priority={todo.priority}
+        createdAt={todo.createdAt}
         todoId={todo.id}
         key={todo.id}
         todoTitle={todo.title}

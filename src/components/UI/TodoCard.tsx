@@ -41,7 +41,7 @@ type Props = {
   todoTitle: string;
   todoDescription: string;
   eta: string;
-
+  createdAt: Date | string;
   todoId: string;
   priority: string;
   deleteTodo: () => void;
@@ -58,7 +58,7 @@ export default function TodoCard(props: Props) {
     todoDescription,
     eta,
     deleteTodo,
-
+    createdAt,
     onEditTodo,
     todoId,
     priority,
@@ -105,8 +105,24 @@ export default function TodoCard(props: Props) {
               {todoDescription}
             </Typography>
           </CardContent>
+
           <CardActions className={classes.cardActionContainer}>
-            <Typography style={{ fontSize: "0.75rem" }}>ETA: {eta}</Typography>
+            <div>
+              <Typography
+                color="secondary"
+                style={{
+                  fontSize: "0.75rem",
+                  textTransform: "uppercase",
+                  margin: "5px 0",
+                  fontWeight: 600
+                }}
+              >
+                created at: {createdAt}
+              </Typography>
+              <Typography style={{ fontSize: "0.75rem", marginTop: "auto", fontWeight: 600 }}>
+                ETA: {eta}
+              </Typography>
+            </div>
 
             <div>
               {isCompleted ? (

@@ -13,6 +13,7 @@ export interface TodoState {
     eta: string,
     isCompleted: boolean,
     isBeingEdited: boolean
+    createdAt: Date | string
 }
 
 // for snackbar
