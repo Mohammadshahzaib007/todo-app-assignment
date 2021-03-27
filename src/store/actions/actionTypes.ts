@@ -7,9 +7,6 @@ export const EDIT_TODO = "EDIT_TODO"
 //-----------------------------------------add todo modal types------------------------------------//
 export const OPEN_ADD_TODO_MODAL = "OPEN_ADD_TODO_MODAL"
 export const CLOSE_ADD_TODO_MODAL = "CLOSE_ADD_TODO_MODAL"
-export const SET_TODO_DATA = "SET_TODO_DATA"
-export const CLEAR_TODO_DATA = "CLEAR_TODO_DATA"
-
 
 //-----------------------------------------snackbar action types------------------------------------//
 export const OPEN_SNACKBAR = "OPEN_SNACKBAR";

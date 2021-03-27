@@ -37,12 +37,15 @@ const todoReducer = (state = initialTodoState, action: AppActionTypes): State =>
 
             state.todos.forEach((item) => {
                 if (item.id === action.id) {
-                    return updatedTodoThatHaveToEdit = { ...item }
+                    return updatedTodoThatHaveToEdit = { ...item, isBeingEdited: true }
                 }
             })
 
+            // removing todo that has isBeingEdited true from the todos
+            const unCompletedTodos = state.todos.filter(item => item.id !== action.id)
             return {
                 ...state,
+                todos: unCompletedTodos,
                 todoThatHaveToEdit: updatedTodoThatHaveToEdit
             }
         default:

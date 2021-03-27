@@ -1,4 +1,4 @@
-import React, { Dispatch, useReducer } from "react";
+import React, { Dispatch, useEffect, useReducer } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -110,22 +110,35 @@ export default function AddTodoModal(props: Props) {
   const open = useSelector((state: AppState) => state.addTodoModal.open);
 
   //-----------------------------------------todo that have to be edited ------------------------------//
-  // const todoHaveToEdit = useSelector(
-  //   (state: AppState) => state.todo.todoThatHaveToEdit
-  // );
+  const todoHaveToEdit = useSelector(
+    (state: AppState) => state.todo.todoThatHaveToEdit
+  );
 
-  // const editTodoHandler = () => {
-  //   if (Object.keys(todoHaveToEdit).length !== 0) {
-  //     localDispatch({ type: "SET_TITLE", payload: todoHaveToEdit.title });
-  //     localDispatch({
-  //       type: "SET_DESCRIPTION",
-  //       payload: todoHaveToEdit.description,
-  //     });
-  //     localDispatch({ type: "SET_ETA", payload: todoHaveToEdit.eta });
-  //     localDispatch({ type: "SET_PRIORITY", payload: todoHaveToEdit.priority });
-  //     return;
-  //   }
-  // };
+  const editTodoHandler = () => {
+    if (
+      Object.keys(todoHaveToEdit).length !== 0 ||
+      todoHaveToEdit.isBeingEdited
+    ) {
+      localDispatch({ type: "SET_TITLE", payload: todoHaveToEdit.title });
+      localDispatch({
+        type: "SET_DESCRIPTION",
+        payload: todoHaveToEdit.description,
+      });
+      localDispatch({ type: "SET_ETA", payload: todoHaveToEdit.eta });
+      localDispatch({ type: "SET_PRIORITY", payload: todoHaveToEdit.priority });
+      return;
+    }
+  };
+
+  // for updating text fields values
+  useEffect(() => {
+    editTodoHandler();
+  }, [todoHaveToEdit]);
+
+  const modalCloseHandler = () => {
+    handleClose();
+    localDispatch({ type: "CLEAR_FIELDS", payload: "" });
+  };
 
   const addTodoHandler = () => {
     if (
@@ -144,26 +157,43 @@ export default function AddTodoModal(props: Props) {
       return false;
     }
 
-    handleClose();
-
-    dispatch(
-      addTodo({
-        id: uuidv4(),
-        title: state.title,
-        description: state.description,
-        eta: state.eta,
-        priority: state.priority,
-        isCompleted: false,
-      })
-    );
+    modalCloseHandler();
+    if (todoHaveToEdit.isBeingEdited === true) {
+      dispatch(
+        addTodo({
+          id: todoHaveToEdit.id,
+          title: state.title,
+          description: state.description,
+          eta: state.eta,
+          priority: state.priority,
+          isCompleted: todoHaveToEdit.isCompleted,
+          isBeingEdited: false,
+        })
+      );
+    
+    } else {
+      dispatch(
+        addTodo({
+          id: uuidv4(),
+          title: state.title,
+          description: state.description,
+          eta: state.eta,
+          priority: state.priority,
+          isCompleted: false,
+          isBeingEdited: false,
+        })
+      );
+    }
 
     // for success msg
-
+    const msg = todoHaveToEdit.isBeingEdited
+      ? "Todo was updated successful"
+      : "Todo was added successful";
     dispatch(
       openSnackbar({
         color: "success",
         open: true,
-        content: "Todo was added succesfully",
+        content: msg,
       })
     );
     localDispatch({ type: "CLEAR_FIELDS", payload: "" });
@@ -173,7 +203,7 @@ export default function AddTodoModal(props: Props) {
     <div>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={modalCloseHandler}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Add Tasks</DialogTitle>
@@ -246,7 +276,7 @@ export default function AddTodoModal(props: Props) {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={modalCloseHandler} color="secondary">
             Cancel
           </Button>
           <Button onClick={addTodoHandler} color="secondary">

@@ -1,4 +1,4 @@
-import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO, CLOSE_ADD_TODO_MODAL, EDIT_TODO, SET_TODO_DATA, CLEAR_TODO_DATA } from "../actions/actionTypes";
+import { ADD_TODO, CLOSE_SNACKBAR, MARK_AS_COMPLETED, OPEN_ADD_TODO_MODAL, OPEN_SNACKBAR, REMOVE_TODO, CLOSE_ADD_TODO_MODAL, EDIT_TODO } from "../actions/actionTypes";
 import { SnackbarState, TodoState } from "./stateTypes";
 
 //-----------------------------------------todo action types------------------------------------//
@@ -45,16 +45,7 @@ export interface CloseAddTodoModal {
     type: typeof CLOSE_ADD_TODO_MODAL
 }
 
-export interface SetTodoData {
-    type: typeof SET_TODO_DATA,
-    payload: TodoState,
-}
-
-export interface ClearTodoData {
-    type: typeof CLEAR_TODO_DATA,
-}
-
-export type AddTodoModalTypes = OpenAddTodoModal | CloseAddTodoModal | SetTodoData | ClearTodoData;
+export type AddTodoModalTypes = OpenAddTodoModal | CloseAddTodoModal;
 
 //-----------------------------------------app action types------------------------------------//
 export type AppActionTypes = TodoActionTypes | SnackbarActionTypes | AddTodoModalTypes

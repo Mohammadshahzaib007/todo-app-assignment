@@ -11,7 +11,8 @@ export interface TodoState {
     title: string,
     description: string,
     eta: string,
-    isCompleted: boolean
+    isCompleted: boolean,
+    isBeingEdited: boolean
 }
 
 // for snackbar
