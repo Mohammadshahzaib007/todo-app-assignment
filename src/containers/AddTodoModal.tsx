@@ -18,7 +18,11 @@ import {
 } from "@material-ui/core";
 import { AppState } from "../store";
 import { openSnackbar } from "../store/actions/snackbar";
-import { addTodo } from "../store/actions/todo";
+import {
+  addTodo,
+  completedEditingTodo,
+  removeTodoThatIsBeingUpdated,
+} from "../store/actions/todo";
 
 //-----------------------------------------Material UI------------------------------------//
 const useStyles = makeStyles({
@@ -138,6 +142,7 @@ export default function AddTodoModal(props: Props) {
   const modalCloseHandler = () => {
     handleClose();
     localDispatch({ type: "CLEAR_FIELDS", payload: "" });
+    dispatch(completedEditingTodo());
   };
 
   const addTodoHandler = () => {
@@ -159,6 +164,8 @@ export default function AddTodoModal(props: Props) {
 
     modalCloseHandler();
     if (todoHaveToEdit.isBeingEdited === true) {
+      dispatch(removeTodoThatIsBeingUpdated(todoHaveToEdit.id));
+
       dispatch(
         addTodo({
           id: todoHaveToEdit.id,
@@ -170,7 +177,7 @@ export default function AddTodoModal(props: Props) {
           isBeingEdited: false,
         })
       );
-    
+      dispatch(completedEditingTodo());
     } else {
       dispatch(
         addTodo({
@@ -280,7 +287,7 @@ export default function AddTodoModal(props: Props) {
             Cancel
           </Button>
           <Button onClick={addTodoHandler} color="secondary">
-            add
+            {Object.keys(todoHaveToEdit).length !== 0 ? "update todo" : "add"}
           </Button>
         </DialogActions>
       </Dialog>
