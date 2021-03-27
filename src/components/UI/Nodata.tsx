@@ -18,7 +18,8 @@ function Nodata(props:Props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: '1.875rem'
       }}
     >
         <Typography variant="h5">{  title }</Typography>

@@ -14,8 +14,8 @@ import { openAddTodoModal } from "../store/actions/addTodoModal";
 const useStyles = makeStyles({
   mainContainer: {
     width: "100%",
-    height: "calc(85vh - 15.625rem)",
-    overflow: "auto",
+    minHeight: "calc(85vh - 15.625rem)",
+   
   },
 });
 

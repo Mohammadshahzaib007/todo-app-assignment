@@ -10,6 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import Badge from "@material-ui/core/Badge";
 import UndoIcon from "@material-ui/icons/Undo";
+import { CSSTransition } from "react-transition-group";
 
 const useStyles = makeStyles({
   root: {
@@ -81,7 +82,15 @@ export default function TodoCard(props: Props) {
 
   return (
     <div id="card" style={{ marginTop: "20px" }}>
-      {isCompleted && <span className="completed-badge">Completed</span>}
+      <CSSTransition
+        in={isCompleted}
+        timeout={300}
+        classNames="completed-badge-animation"
+        unmountOnExit
+      >
+        <span className="completed-badge">Completed</span>
+      </CSSTransition>
+
       <Badge
         badgeContent={priority.slice(0, 1).toLocaleUpperCase()}
         color="secondary"
@@ -111,15 +120,21 @@ export default function TodoCard(props: Props) {
               <Typography
                 color="secondary"
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: "0.625rem",
                   textTransform: "uppercase",
                   margin: "5px 0",
-                  fontWeight: 600
+                  fontWeight: 600,
                 }}
               >
                 created at: {createdAt}
               </Typography>
-              <Typography style={{ fontSize: "0.75rem", marginTop: "auto", fontWeight: 600 }}>
+              <Typography
+                style={{
+                  fontSize: "0.625rem",
+                  marginTop: "auto",
+                  fontWeight: 600,
+                }}
+              >
                 ETA: {eta}
               </Typography>
             </div>

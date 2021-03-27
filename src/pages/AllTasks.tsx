@@ -15,23 +15,19 @@ import { openAddTodoModal } from "../store/actions/addTodoModal";
 const useStyles = makeStyles({
   mainContainer: {
     width: "100%",
-    height: "calc(85vh - 15.625rem)",
-    overflow: "auto",
+    minHeight: "calc(85vh - 15.625rem)",
   },
 });
 
 function AllTasks() {
   const classes = useStyles();
 
-
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
-
-  
   const deleteTodo = (id: string) => {
     dispatch(removeTodo(id));
-   
+
     dispatch(
       openSnackbar({
         color: "success",
@@ -41,7 +37,7 @@ function AllTasks() {
     );
   };
 
-  // for marking todo as completed or undo 
+  // for marking todo as completed or undo
   const markAsCompletedTodo = (id: string) => {
     dispatch(markAsCompleted(id));
   };
@@ -59,14 +55,14 @@ function AllTasks() {
   const todoLists = () => {
     return todos.map((todo: TodoState) => (
       <TodoCard
+        key={todo.id}
         priority={todo.priority}
         todoId={todo.id}
-        key={todo.id}
         todoTitle={todo.title}
         todoDescription={todo.description}
         eta={todo.eta}
-       deleteTodo={() => deleteTodo(todo.id)}
-       createdAt={todo.createdAt}
+        deleteTodo={() => deleteTodo(todo.id)}
+        createdAt={todo.createdAt}
         markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
         onEditTodo={editSelectedTodo}

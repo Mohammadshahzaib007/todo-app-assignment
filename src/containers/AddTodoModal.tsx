@@ -187,7 +187,7 @@ export default function AddTodoModal(props: Props) {
           description: state.description,
           eta: moment(state.eta).format("MMM Do YY"),
           priority: state.priority,
-          isCompleted: todoHaveToEdit.isCompleted,
+          isCompleted: false,
           isBeingEdited: false,
           createdAt: moment().format("MMM Do YY"),
         })

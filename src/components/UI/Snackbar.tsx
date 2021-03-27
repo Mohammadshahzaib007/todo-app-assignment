@@ -45,7 +45,7 @@ export default function Snackbar() {
     <div className={classes.root}>
       <SnackbarMui
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={handleClose}
         anchorOrigin={{
           vertical: "top",

@@ -14,8 +14,7 @@ import { openSnackbar } from "../store/actions/snackbar";
 const useStyles = makeStyles({
   mainContainer: {
     width: "100%",
-    height: "calc(85vh - 15.625rem)",
-    overflow: "auto",
+    minHeight: "calc(85vh - 15.625rem)",
   },
 });
 
@@ -41,11 +40,11 @@ function PendingTasks() {
   //-----------------------------------------All Todos------------------------------//
   const todos = useSelector((state: AppState) => state.todo.todos);
 
-  // for getting rid of error
-  type Todos = typeof todos;
-
+  
   // filter completed Todos
-  const pendingTodos: Todos = [];
+  const pendingTodos = todos.filter(
+    (todo) => todo.isCompleted === false
+  );
 
   //-----------------------------------------edit todo------------------------------//
   const editSelectedTodo = (id: string) => {
