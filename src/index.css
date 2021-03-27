@@ -3,6 +3,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
 }
 
 .fullWidthAndHeight {
@@ -33,7 +34,7 @@ body {
   font-weight: 600;
   font-size: 10px;
   transform: rotate(-35deg);
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 /* for badge */
@@ -42,24 +43,32 @@ body {
   right: 10px;
 }
 
+/* for routing animation */
 
-/* for animating del */
+.fade-enter,
+.fade-exit {
+  transition: opacity 1s ease-out;
+}
 
-.item-enter {
+.fade-enter {
   opacity: 0;
 }
-.item-enter-active {
+
+.fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.item-exit {
-  opacity: 1;
-}
-.item-exit-active {
-  opacity: 0;
-  transition: opacity 500ms ease-in;
 }
 
+.fade-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
 
 /* for animating completed badge */
 .completed-badge-animation-enter {
@@ -81,9 +90,8 @@ body {
   transition: opacity 300ms, transform 300ms;
 }
 
-@media(max-width: 900px) {
+@media (max-width: 900px) {
   html {
     font-size: 13px;
   }
 }
-
