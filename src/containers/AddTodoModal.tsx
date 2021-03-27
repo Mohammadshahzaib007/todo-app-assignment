@@ -7,7 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_TODO, OPEN_SNACKBAR } from "../store/actions/actionTypes";
 import { AppActionTypes } from "../store/types/action";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -18,6 +17,8 @@ import {
   Select,
 } from "@material-ui/core";
 import { AppState } from "../store";
+import { openSnackbar } from "../store/actions/snackbar";
+import { addTodo } from "../store/actions/todo";
 
 //-----------------------------------------Material UI------------------------------------//
 const useStyles = makeStyles({
@@ -109,11 +110,22 @@ export default function AddTodoModal(props: Props) {
   const open = useSelector((state: AppState) => state.addTodoModal.open);
 
   //-----------------------------------------todo that have to be edited ------------------------------//
-  // const todoHaveToEdit = useSelector((state: AppState) => state.todo.todoThatHaveToEdit);
+  // const todoHaveToEdit = useSelector(
+  //   (state: AppState) => state.todo.todoThatHaveToEdit
+  // );
 
   // const editTodoHandler = () => {
-
-  // }
+  //   if (Object.keys(todoHaveToEdit).length !== 0) {
+  //     localDispatch({ type: "SET_TITLE", payload: todoHaveToEdit.title });
+  //     localDispatch({
+  //       type: "SET_DESCRIPTION",
+  //       payload: todoHaveToEdit.description,
+  //     });
+  //     localDispatch({ type: "SET_ETA", payload: todoHaveToEdit.eta });
+  //     localDispatch({ type: "SET_PRIORITY", payload: todoHaveToEdit.priority });
+  //     return;
+  //   }
+  // };
 
   const addTodoHandler = () => {
     if (
@@ -122,40 +134,38 @@ export default function AddTodoModal(props: Props) {
       state.eta === "" ||
       state.priority === ""
     ) {
-      dispatch({
-        type: OPEN_SNACKBAR,
-        payload: {
+      dispatch(
+        openSnackbar({
           color: "error",
           open: true,
           content: "Please Entere Valid Data or don't left any field empty",
-        },
-      });
+        })
+      );
       return false;
     }
 
     handleClose();
 
-    dispatch({
-      type: ADD_TODO,
-      payload: {
+    dispatch(
+      addTodo({
         id: uuidv4(),
         title: state.title,
         description: state.description,
         eta: state.eta,
         priority: state.priority,
         isCompleted: false,
-      },
-    });
+      })
+    );
 
     // for success msg
-    dispatch({
-      type: OPEN_SNACKBAR,
-      payload: {
+
+    dispatch(
+      openSnackbar({
         color: "success",
         open: true,
         content: "Todo was added succesfully",
-      },
-    });
+      })
+    );
     localDispatch({ type: "CLEAR_FIELDS", payload: "" });
   };
 

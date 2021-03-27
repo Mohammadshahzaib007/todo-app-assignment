@@ -5,7 +5,7 @@ import { TodosState as State, TodoState } from "../types/stateTypes";
 
 const initialTodoState: State = {
     todos: [],
-    todoThatHaveToEdit: {}
+    todoThatHaveToEdit: {} as TodoState
 }
 
 
@@ -33,7 +33,7 @@ const todoReducer = (state = initialTodoState, action: AppActionTypes): State =>
             }
         case EDIT_TODO:
 
-            let updatedTodoThatHaveToEdit: TodoState | {} = {};
+            let updatedTodoThatHaveToEdit = {} as TodoState;
 
             state.todos.forEach((item) => {
                 if (item.id === action.id) {

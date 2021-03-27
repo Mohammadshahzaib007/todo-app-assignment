@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../store";
 import { Dispatch } from "redux";
 import { AppActionTypes } from "../../store/types/action";
-import { CLOSE_SNACKBAR } from "../../store/actions/actionTypes";
+import { closeSnackbar } from "../../store/actions/snackbar";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,7 +37,8 @@ export default function Snackbar() {
       return;
     }
 
-    dispatch({ type: CLOSE_SNACKBAR });
+    // dispatch({ type: CLOSE_SNACKBAR });
+    dispatch(closeSnackbar())
   };
 
   return (

@@ -1,7 +1,7 @@
 // array of todos
 export interface TodosState {
     todos: Array<TodoState>,
-    todoThatHaveToEdit: TodoState | {}
+    todoThatHaveToEdit: TodoState
 }
 
 // a single todo

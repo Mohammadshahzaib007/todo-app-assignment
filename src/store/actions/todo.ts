@@ -9,7 +9,7 @@ export const addTodo = (payload: TodoState): AppActionTypes => {
     }
 }
 
-export const removeTod = (id: string): AppActionTypes => {
+export const removeTodo = (id: string): AppActionTypes => {
     return {
         type: REMOVE_TODO,
         id: id

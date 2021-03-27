@@ -15,6 +15,8 @@ import {
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { AppActionTypes } from "../store/types/action";
+import { openSnackbar } from "../store/actions/snackbar";
+import { removeTodo } from "../store/actions/todo";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -41,16 +43,21 @@ function AllTasks() {
   // it will be used in the delete modal component
   // for now it won't be used in delete component (it is being used in the card-todo component)
   const deleteConfirmationHandler = (id: string) => {
-    dispatch({ type: REMOVE_TODO, id: id });
-
-    dispatch({
-      type: OPEN_SNACKBAR,
-      payload: {
-        color: "success",
-        open: true,
-        content: "Todo deleted successfully",
-      },
-    });
+    // dispatch({ type: REMOVE_TODO, id: id });
+    dispatch(removeTodo(id))
+    // dispatch({
+    //   type: OPEN_SNACKBAR,
+    //   payload: {
+    //     color: "success",
+    //     open: true,
+    //     content: "Todo deleted successfully",
+    //   },
+    // });
+    dispatch(openSnackbar({
+      color: "success",
+      open: true,
+      content: "Todo deleted successfully",
+    }))
   };
 
   // for marking todo as completed
@@ -66,6 +73,7 @@ function AllTasks() {
   const editTodo = (id: string) => {
     dispatch({ type: OPEN_ADD_TODO_MODAL });
     dispatch({type: EDIT_TODO, id: id})
+
   };
 
   const todoLists = () => {
