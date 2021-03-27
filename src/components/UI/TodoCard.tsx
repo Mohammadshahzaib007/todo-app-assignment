@@ -10,6 +10,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import Badge from "@material-ui/core/Badge";
 import DeleteModal from "./DeleteModal";
+import UndoIcon from "@material-ui/icons/Undo";
 
 const useStyles = makeStyles({
   root: {
@@ -48,7 +49,7 @@ type Props = {
   deleteConfirmationHandler: (id: string) => void;
   markAsCompleted: (id: string) => void;
   isCompleted: boolean;
-  onEditTodo: (id:string) => void;
+  onEditTodo: (id: string) => void;
 };
 
 export default function TodoCard(props: Props) {
@@ -114,17 +115,29 @@ export default function TodoCard(props: Props) {
             <Typography style={{ fontSize: "0.75rem" }}>ETA: {eta}</Typography>
 
             <div>
-              <Tooltip title="Mark as completed">
-                <div style={{ display: "inline-block" }}>
-                  <IconButton
-                    disabled={isCompleted}
-                    color="secondary"
-                    onClick={() => markAsCompleted(todoId)}
-                  >
-                    <DoneIcon fontSize="small" />
-                  </IconButton>
-                </div>
-              </Tooltip>
+              {isCompleted ? (
+                <Tooltip title="Undo">
+                  <div style={{ display: "inline-block" }}>
+                    <IconButton
+                      color="secondary"
+                      onClick={() => markAsCompleted(todoId)}
+                    >
+                      <UndoIcon fontSize="small" />
+                    </IconButton>
+                  </div>
+                </Tooltip>
+              ) : (
+                <Tooltip title="Mark as completed">
+                  <div style={{ display: "inline-block" }}>
+                    <IconButton
+                      color="secondary"
+                      onClick={() => markAsCompleted(todoId)}
+                    >
+                      <DoneIcon fontSize="small" />
+                    </IconButton>
+                  </div>
+                </Tooltip>
+              )}
 
               <Tooltip title="Edit Todo">
                 <IconButton color="secondary" onClick={onEdit}>

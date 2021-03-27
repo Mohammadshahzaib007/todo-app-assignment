@@ -26,7 +26,7 @@ const todoReducer = (state = initialTodoState, action: AppActionTypes): State =>
 
         case MARK_AS_COMPLETED:
             const updatedTodosWithCompletedTodos = state.todos.map(el => {
-                return el.id === action.id ? { ...el, isCompleted: true } : el
+                return el.id === action.id ? { ...el, isCompleted: !el.isCompleted } : el
             })
             return {
                 ...state,
