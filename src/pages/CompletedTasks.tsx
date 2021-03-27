@@ -7,7 +7,7 @@ import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
 import { TodoState } from "../store/types/stateTypes";
-import { removeTodo } from "../store/actions/todo";
+import { editTodo, removeTodo } from "../store/actions/todo";
 import { openSnackbar } from "../store/actions/snackbar";
 import { openAddTodoModal } from "../store/actions/addTodoModal";
 
@@ -55,14 +55,15 @@ function CompletedTasks() {
   const completedTodos = todos.filter((item) => item.isCompleted === true);
 
   //-----------------------------------------edit todo------------------------------//
-  const editTodo = (id: string) => {
+  const editSelectedTodo = (id: string) => {
     dispatch(openAddTodoModal());
+    dispatch(editTodo(id));
   };
 
   const todoLists = () => {
     return completedTodos.map((todo: TodoState) => (
       <TodoCard
-        onEditTodo={editTodo}
+        onEditTodo={editSelectedTodo}
         priority={todo.priority}
         openCloseDeleteModal={openCloseDeleteModalHandler}
         todoId={todo.id}
@@ -81,7 +82,7 @@ function CompletedTasks() {
 
   return (
     <section className={classes.mainContainer}>
-      {todos.length === 0 ? (
+      {completedTodos.length === 0 ? (
         <Nodata title="You haven't completed any tasks yet...😥 " />
       ) : (
         <Container>

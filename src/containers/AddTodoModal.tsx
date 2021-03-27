@@ -162,8 +162,7 @@ export default function AddTodoModal(props: Props) {
       return false;
     }
 
-    modalCloseHandler();
-    if (todoHaveToEdit.isBeingEdited === true) {
+    if (Object.keys(todoHaveToEdit).length !== 0) {
       dispatch(removeTodoThatIsBeingUpdated(todoHaveToEdit.id));
 
       dispatch(
@@ -186,7 +185,7 @@ export default function AddTodoModal(props: Props) {
           description: state.description,
           eta: state.eta,
           priority: state.priority,
-          isCompleted: false,
+          isCompleted: todoHaveToEdit.isCompleted,
           isBeingEdited: false,
         })
       );
@@ -204,6 +203,7 @@ export default function AddTodoModal(props: Props) {
       })
     );
     localDispatch({ type: "CLEAR_FIELDS", payload: "" });
+    modalCloseHandler();
   };
 
   return (

@@ -84,7 +84,7 @@ function PendingTasks() {
 
   return (
     <section className={classes.mainContainer}>
-      {todos.length === 0 ? (
+      {pendingTodos.length === 0 ? (
         <Nodata title="There aren't any pending tasks, Well Done... 🤗 " />
       ) : (
         <Container>
