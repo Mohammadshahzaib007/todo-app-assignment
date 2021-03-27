@@ -8,7 +8,7 @@ import { AppActionTypes } from "../store/types/action";
 
 import { TodoState } from "../store/types/stateTypes";
 import TodoCard from "../components/UI/TodoCard";
-import { editTodo, removeTodo } from "../store/actions/todo";
+import { editTodo, markAsCompleted, removeTodo } from "../store/actions/todo";
 import { openSnackbar } from "../store/actions/snackbar";
 
 const useStyles = makeStyles({
@@ -62,6 +62,11 @@ function PendingTasks() {
     dispatch(editTodo(id));
   };
 
+  // for marking todo as completed or undo 
+  const markAsCompletedTodo = (id: string) => {
+    dispatch(markAsCompleted(id));
+  };
+
   const todoLists = () => {
     return pendingTodos.map((todo: TodoState) => (
       <TodoCard
@@ -75,7 +80,7 @@ function PendingTasks() {
         isDeleteModalOpen={isDeleteModalOpen}
         deleteConfirmationHandler={deleteConfirmationHandler}
         // for get rid of the error
-        markAsCompleted={() => {}}
+        markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
         onEditTodo={editSelectedTodo}
       />

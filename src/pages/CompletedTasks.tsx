@@ -7,7 +7,7 @@ import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
 import { AppActionTypes } from "../store/types/action";
 import { TodoState } from "../store/types/stateTypes";
-import { editTodo, removeTodo } from "../store/actions/todo";
+import { editTodo, markAsCompleted, removeTodo } from "../store/actions/todo";
 import { openSnackbar } from "../store/actions/snackbar";
 import { openAddTodoModal } from "../store/actions/addTodoModal";
 
@@ -60,6 +60,12 @@ function CompletedTasks() {
     dispatch(editTodo(id));
   };
 
+ // for unmarking todo as completed
+ const markAsCompletedTodo = (id: string) => {
+  dispatch(markAsCompleted(id));
+};
+
+
   const todoLists = () => {
     return completedTodos.map((todo: TodoState) => (
       <TodoCard
@@ -73,8 +79,7 @@ function CompletedTasks() {
         eta={todo.eta}
         isDeleteModalOpen={isDeleteModalOpen}
         deleteConfirmationHandler={deleteConfirmationHandler}
-        // for get rid of the error
-        markAsCompleted={() => {}}
+        markAsCompleted={(id) => markAsCompletedTodo(id)}
         isCompleted={todo.isCompleted}
       />
     ));

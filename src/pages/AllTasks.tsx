@@ -48,7 +48,7 @@ function AllTasks() {
     );
   };
 
-  // for marking todo as completed
+  // for marking todo as completed or undo 
   const markAsCompletedTodo = (id: string) => {
     dispatch(markAsCompleted(id));
   };
