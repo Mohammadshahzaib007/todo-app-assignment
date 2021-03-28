@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, makeStyles, Grid } from "@material-ui/core";
+import { Container, makeStyles, Grid, useMediaQuery } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import TodoCard from "../components/UI/TodoCard";
 import { AppState } from "../store";
@@ -21,6 +21,9 @@ const useStyles = makeStyles({
 
 function AllTasks() {
   const classes = useStyles();
+
+  // for responsiveness
+  const isSmallDevice = useMediaQuery("(max-width:600px)");
 
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
@@ -76,7 +79,11 @@ function AllTasks() {
         <Nodata title="There aren't any tasks for today..😊 " />
       ) : (
         <Container>
-          <Grid container wrap="wrap">
+          <Grid
+            container
+            wrap="wrap"
+            justify={isSmallDevice ? "center" : "flex-start"}
+          >
             {todoLists()}
           </Grid>
         </Container>

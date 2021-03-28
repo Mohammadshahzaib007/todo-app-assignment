@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, makeStyles } from "@material-ui/core";
+import { Container, Grid, makeStyles, useMediaQuery } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import Nodata from "../components/UI/Nodata";
@@ -21,6 +21,9 @@ const useStyles = makeStyles({
 function PendingTasks() {
   const classes = useStyles();
 
+  // for responsiveness
+  const isSmallDevice = useMediaQuery("(max-width:600px)");
+
   //-----------------------------------------Redux Dispatch with useDispatch hook------------------------------//
   const dispatch = useDispatch<Dispatch<AppActionTypes>>();
 
@@ -40,11 +43,8 @@ function PendingTasks() {
   //-----------------------------------------All Todos------------------------------//
   const todos = useSelector((state: AppState) => state.todo.todos);
 
-  
   // filter completed Todos
-  const pendingTodos = todos.filter(
-    (todo) => todo.isCompleted === false
-  );
+  const pendingTodos = todos.filter((todo) => todo.isCompleted === false);
 
   //-----------------------------------------edit todo------------------------------//
   const editSelectedTodo = (id: string) => {
@@ -80,7 +80,11 @@ function PendingTasks() {
         <Nodata title="There aren't any pending tasks, Well Done... 🤗 " />
       ) : (
         <Container>
-          <Grid container wrap="wrap">
+          <Grid
+            container
+            wrap="wrap"
+            justify={isSmallDevice ? "center" : "flex-start"}
+          >
             {todoLists()}
           </Grid>
         </Container>
